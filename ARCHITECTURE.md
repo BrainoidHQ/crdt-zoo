@@ -37,8 +37,8 @@ types that many algorithms need:
 - `JoinSemilattice`
 - `BoundedJoinSemilattice`
 - `CvRDT`
-- future actor and replica identifiers
-- future dots, version vectors, dot sets, and causal contexts
+- actor and replica identifiers
+- dots, version vectors, dot sets, and causal contexts
 - future traits for operation-based and delta-state CRDTs
 
 Trait laws belong in documentation even when Rust cannot enforce them. For
@@ -189,13 +189,11 @@ use std::collections::{BTreeMap, BTreeSet};
 
 pub struct ActorId(String);
 
-pub struct Dot {
-    pub actor: ActorId,
-    pub counter: u64,
-}
+pub struct Dot<A = ActorId> { /* actor, counter */ }
 
-pub type VersionVector = BTreeMap<ActorId, u64>;
-pub type DotSet = BTreeSet<Dot>;
+pub struct VersionVector<A = ActorId> { /* actor -> counter */ }
+pub struct DotSet<A = ActorId> { /* BTreeSet<Dot<A>> */ }
+pub struct CausalContext<A = ActorId> { /* compact clock + dot set */ }
 ```
 
 Stable ordering makes examples reproducible and test failures readable. It also

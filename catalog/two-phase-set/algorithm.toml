@@ -1,0 +1,47 @@
+id = "two-phase-set"
+slug = "two-phase-set"
+name = "2P-Set"
+long_name = "Two-phase Set"
+family = "set"
+difficulty = "intermediate"
+summary = "A state-based set CRDT where removes permanently tombstone elements."
+kind = ["state-based", "CvRDT"]
+tags = ["set", "delete", "tombstone", "join-semilattice", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
+
+[rust]
+crate = "crdt-algorithms"
+module = "sets::two_phase"
+type = "TwoPhaseSet"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/sets/two_phase.rs"
+api_docs_path = "rustdoc/crdt_algorithms/sets/two_phase/struct.TwoPhaseSet.html"
+
+[proofs]
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = false
+
+[properties]
+laws = [
+  "join is associative",
+  "join is commutative",
+  "join is idempotent",
+  "add is inflationary",
+  "remove is inflationary",
+  "remove wins permanently",
+]

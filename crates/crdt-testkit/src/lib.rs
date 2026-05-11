@@ -6,7 +6,9 @@ pub mod generators;
 pub mod law_tests;
 pub mod reference;
 
-pub use generators::{small_actor_counts, small_actor_id, small_actor_set};
+pub use generators::{
+    small_actor_counts, small_actor_id, small_actor_set, small_dot, small_dot_set,
+};
 pub use law_tests::{
     assert_inflationary, check_join_semilattice_laws, prop_inflationary, prop_join_semilattice_laws,
 };

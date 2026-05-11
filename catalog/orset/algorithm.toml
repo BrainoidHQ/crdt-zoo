@@ -1,0 +1,47 @@
+id = "orset"
+slug = "orset"
+name = "OR-Set"
+long_name = "Observed-remove Set"
+family = "set"
+difficulty = "advanced"
+summary = "A causally tracked add-wins set CRDT using dots and a causal context."
+kind = ["state-based", "CvRDT"]
+tags = ["set", "delete", "add-wins", "dot", "causal-context", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
+
+[rust]
+crate = "crdt-algorithms"
+module = "sets::orset"
+type = "ORSet"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/sets/orset.rs"
+api_docs_path = "rustdoc/crdt_algorithms/sets/orset/struct.ORSet.html"
+
+[proofs]
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = false
+
+[properties]
+laws = [
+  "join is associative",
+  "join is commutative",
+  "join is idempotent",
+  "add is inflationary",
+  "observed remove clears observed dots",
+  "concurrent add wins over remove",
+]

@@ -14,7 +14,8 @@ for code, proofs, tests, and catalog pages.
 ## Repository Status
 
 Phase 0 is complete, and the catalog now includes the Phase 1 semilattice
-basics. The first complete exhibit is the Grow-only Counter (G-Counter), with:
+basics plus the Phase 2 Rust implementations for sets with deletes. The first
+complete exhibit is the Grow-only Counter (G-Counter), with:
 
 - a Rust implementation in `crates/crdt-algorithms`
 - shared algebraic traits in `crates/crdt-core`
@@ -27,6 +28,11 @@ The Phase 1 implementations add Bool OR, Max Register, PN-Counter, and G-Set
 alongside property-based law tests, small reusable generators, reference-model
 comparison helpers, a generic Lean convergence theorem, and CI jobs for Rust,
 Lean, and TLC.
+
+The Phase 2 implementations add 2P-Set, LWW-Element-Set, and OR-Set, plus shared
+actor ids, replica ids, dots, dot sets, version vectors, causal contexts, and
+tombstone/garbage-collection documentation. Formal Lean and TLA+ models for
+these delete-aware sets are still deferred and called out in the catalog pages.
 
 ## Workspace Layout
 
@@ -63,6 +69,8 @@ crdt-zoo/
   traces, and fuzzing fit together
 - [Adding Algorithms](docs/ADDING_ALGORITHMS.md): the expected checklist for a
   new catalog entry
+- [Tombstones And Garbage Collection](docs/TOMBSTONES_AND_GC.md): delete
+  metadata and collection constraints for set CRDTs
 - [References](docs/REFERENCES.md): background material that informs the design
 
 The GitHub Pages site is generated from `catalog/` through `tools/catalog-gen`
@@ -131,8 +139,11 @@ tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 | [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Not provided | Not provided |
 | [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLC bounded model check |
 | [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
+| [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
 | [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Not provided | Not provided |
+| [OR-Set](catalog/orset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
 | [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Not provided | Not provided |
+| [2P-Set](catalog/two-phase-set/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
 
 ## License
 

@@ -57,22 +57,24 @@ introducing deletes or causal metadata.
 
 ## Phase 2: Sets With Deletes
 
+Status: Rust/catalog implementation complete; formal models deferred.
+
 Focus on sets where removal needs explicit semantics.
 
 Planned items:
 
-- 2P-Set
-- LWW-Element-Set
-- OR-Set
+- [x] 2P-Set
+- [x] LWW-Element-Set
+- [x] OR-Set
 
 Infrastructure to build:
 
-- actor ids and replica ids
-- dots and dot sets
-- version vectors
-- causal contexts
-- delivery-assumption sections in every catalog page
-- tombstone and garbage-collection documentation
+- [x] actor ids and replica ids
+- [x] dots and dot sets
+- [x] version vectors
+- [x] causal contexts
+- [x] delivery-assumption sections in every catalog page
+- [x] tombstone and garbage-collection documentation
 
 Expected outcome:
 

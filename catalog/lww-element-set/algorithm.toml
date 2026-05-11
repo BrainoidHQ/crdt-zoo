@@ -1,0 +1,47 @@
+id = "lww-element-set"
+slug = "lww-element-set"
+name = "LWW-Element-Set"
+long_name = "Last-writer-wins Element Set"
+family = "set"
+difficulty = "intermediate"
+summary = "A timestamp-based state set CRDT with remove-wins timestamp ties."
+kind = ["state-based", "CvRDT"]
+tags = ["set", "delete", "timestamp", "last-writer-wins", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
+
+[rust]
+crate = "crdt-algorithms"
+module = "sets::lww_element"
+type = "LWWElementSet"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/sets/lww_element.rs"
+api_docs_path = "rustdoc/crdt_algorithms/sets/lww_element/struct.LWWElementSet.html"
+
+[proofs]
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = false
+
+[properties]
+laws = [
+  "join is associative",
+  "join is commutative",
+  "join is idempotent",
+  "add timestamp update is inflationary",
+  "remove timestamp update is inflationary",
+  "equal timestamps are remove-wins",
+]
