@@ -50,12 +50,14 @@ runtime checks.
 
 `crdt-algorithms` owns concrete CRDT implementations. Algorithms should use the
 traits from `crdt-core` and should avoid inventing private equivalents of shared
-concepts. The current implementation is `GCounter`.
+concepts. The crate currently contains small lattice CRDTs, counters, registers,
+and set CRDTs, including delete-aware 2P-Set, LWW-Element-Set, and OR-Set.
 
 Algorithm modules should be small enough to read locally, but complete enough to
 show the intended API. Public APIs should make delivery assumptions and failure
 modes visible. For example, `GCounter::increment_by` returns an overflow error
-instead of silently wrapping a component.
+instead of silently wrapping a component, and `ORSet::add` returns the allocated
+dot or a dot-counter overflow error.
 
 ### `crates/crdt-testkit`
 
@@ -64,6 +66,7 @@ rewriting the same law tests, history generators, and model comparison logic.
 Today it contains deterministic law checks. Over time it should grow into:
 
 - property-based law tests
+- reusable generators for causal metadata
 - operation history generators
 - network simulators
 - reference model comparison helpers
@@ -200,6 +203,16 @@ Stable ordering makes examples reproducible and test failures readable. It also
 keeps catalog pages honest because printed states do not change randomly between
 runs.
 
+`ActorId` identifies a logical writer. `ReplicaId` identifies storage and
+exchange locations. OR-Set currently allocates dots from actor ids; future
+algorithms should keep that distinction so moving an actor between replicas does
+not change its causal identity.
+
+`CausalContext` stores contiguous observations in a version vector and keeps
+non-contiguous dots in a dot set. It is a metadata structure, not a delivery
+guarantee. State-based algorithms still converge through eventual anti-entropy,
+while the context explains which dots a replica has observed.
+
 ## Design Constraints
 
 Avoid these patterns unless there is a strong reason:
@@ -212,18 +225,29 @@ Avoid these patterns unless there is a strong reason:
 - starting with sequence CRDTs before the core algebra is mature
 - hiding network assumptions outside the algorithm page
 
-## Current Skeleton
+## Current Repository Shape
 
-The current skeleton intentionally starts small:
+The repository now has the Phase 1 semilattice basics and the Phase 2
+delete-aware set implementations:
 
 ```text
 crates/
   crdt-core/
+    src/causal.rs
+    src/ids.rs
     src/lattice.rs
     src/state_based.rs
   crdt-algorithms/
     src/counters/gcounter.rs
+    src/counters/pncounter.rs
+    src/lattices/bool_or.rs
+    src/registers/max.rs
+    src/sets/gset.rs
+    src/sets/lww_element.rs
+    src/sets/orset.rs
+    src/sets/two_phase.rs
   crdt-testkit/
+    src/generators.rs
     src/law_tests.rs
 
 proofs/
@@ -236,11 +260,10 @@ proofs/
 
 catalog/
   gcounter/
-    algorithm.toml
-    README.md
-    spec.md
-    examples.md
-    proofs.md
+  gset/
+  lww-element-set/
+  orset/
+  two-phase-set/
 
 docs/book/
   book.toml
@@ -251,6 +274,7 @@ tools/
   catalog-gen/
 ```
 
-The next architectural step is not to add many CRDTs quickly. It is to make this
-one path deeper: richer tests, a clearer reference model, stronger Lean
-theorems, and more useful TLA+ invariants.
+The next architectural step is to make the delete-aware path deeper: reference
+models for OR-Set-like histories, Lean models for causal metadata where
+practical, and TLA+ models that exercise stale, duplicated, reordered, and
+concurrent state delivery.

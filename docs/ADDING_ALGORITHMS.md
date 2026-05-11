@@ -19,6 +19,8 @@ honest.
 11. Add a Lean model or document why it is deferred.
 12. Run `cargo run -p catalog-gen -- --check`.
 13. Run `cargo run -p catalog-gen` and `mdbook build docs/book`.
+14. Update the repository-level documentation when the new algorithm changes a
+    family, shared abstraction, or phase status.
 
 ## Metadata Template
 
@@ -138,6 +140,23 @@ Every operation-based or delta-state algorithm must include a delivery table:
 
 State-based CRDTs should still document whether repeated, reordered, or dropped
 state messages affect convergence.
+
+## Delete-Aware Algorithms
+
+Algorithms that support deletion must document deletion as explicit metadata.
+The catalog page should state:
+
+- whether the visible conflict policy is add-wins, remove-wins,
+  timestamp-based, or causally tracked
+- what metadata records the remove, such as tombstones, remove timestamps,
+  removed dots, version vectors, or causal contexts
+- whether an element can be re-added after removal
+- when delete metadata can be garbage-collected, or why collection is deferred
+- what actor-id, replica-id, timestamp, or clock-skew assumptions the API makes
+
+Prefer shared causal types from `crdt-core` over local equivalents. OR-Set-like
+algorithms should use `ActorId`, `Dot`, `DotSet`, `VersionVector`, and
+`CausalContext` unless there is a documented reason not to.
 
 ## Difficulty Levels
 

@@ -34,6 +34,23 @@ actor ids, replica ids, dots, dot sets, version vectors, causal contexts, and
 tombstone/garbage-collection documentation. Formal Lean and TLA+ models for
 these delete-aware sets are still deferred and called out in the catalog pages.
 
+## Implemented Semantics
+
+The catalog is organized by the conflict semantics each CRDT exposes:
+
+| Semantics | Algorithms |
+| --- | --- |
+| Grow-only semilattice state | Bool OR, G-Counter, G-Set, Max Register |
+| Split positive/negative growth | PN-Counter |
+| Permanent remove-wins tombstones | 2P-Set |
+| Timestamp-based delete policy | LWW-Element-Set |
+| Causally tracked add-wins deletes | OR-Set |
+
+Delete-aware sets are intentionally documented more heavily than G-Set. Their
+catalog pages state whether deletion is permanent, timestamp-based, or tied to
+observed dots, and [Tombstones And Garbage Collection](docs/TOMBSTONES_AND_GC.md)
+describes when delete metadata can be reclaimed safely.
+
 ## Workspace Layout
 
 ```text
@@ -129,8 +146,8 @@ tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 - Prefer deterministic data structures such as `BTreeMap` and `BTreeSet` when
   stable examples, serialization, or test output matter.
 - Treat delivery assumptions as part of an algorithm's public contract.
-- Start with algebraically simple CRDTs before introducing dots, causal
-  contexts, garbage collection, or sequence CRDTs.
+- Treat delete metadata as part of the algorithm, not an implementation detail.
+- Add sequence CRDTs only after the causal set and map infrastructure is mature.
 
 ## Current Catalog
 

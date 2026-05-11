@@ -19,6 +19,7 @@ Useful commands:
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace
+cargo doc --workspace --no-deps
 cargo run -p catalog-gen -- --check
 cargo run -p catalog-gen
 mdbook build docs/book
@@ -54,6 +55,14 @@ For documentation changes:
 - distinguish current behavior from planned behavior
 - link to the relevant catalog entry or source file
 
+For delete-aware CRDT changes:
+
+- state the visible conflict policy directly
+- document tombstones, remove timestamps, dots, or causal context entries
+- include stale, duplicate, reordered, and concurrent delivery assumptions
+- explain when garbage collection is safe, or say that it is deferred
+- add tests for the delete semantics, not only for successful membership reads
+
 ## Algorithm Quality Bar
 
 Before a new algorithm is considered ready for the catalog, it should have:
@@ -83,6 +92,7 @@ repository in a coherent state.
   tie-breaks, monotonicity requirements, and clock-skew behavior.
 - Treat garbage collection as part of the algorithm. OR-Set-like structures must
   document tombstones, causal context, and safe reclamation conditions.
+- Prefer shared `crdt-core` causal metadata types for dot-based algorithms.
 - Keep Lean models mathematical rather than Rust-shaped.
 - Keep TLA+ models focused on distributed behavior rather than pure algebra.
 

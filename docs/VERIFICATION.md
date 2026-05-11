@@ -35,8 +35,8 @@ merge is monotone
 
 In Rust, these become reusable law checks in `crdt-testkit`. The long-term goal
 is to keep those checks property-based for every algorithm that has an input
-generator. Phase 1 includes small reusable generators for actor ids, component
-maps, and actor-like sets.
+generator. The reusable generators now cover actor ids, component maps,
+actor-like sets, dots, and dot sets.
 
 In Lean, the target is a general theorem: if replica states are joins of the
 updates they have observed, then replicas with the same observed updates
@@ -47,6 +47,22 @@ observed join.
 In TLA+, the target is a bounded model that explores local updates, message
 send, message delivery, reordering, duplication, and eventually selected drop
 behaviors.
+
+## Delete-Aware Set Checks
+
+Sets with deletes need checks beyond ordinary set membership examples:
+
+- the state merge must still be associative, commutative, and idempotent
+- each add and remove operation must be inflationary in the semilattice order
+- remove must not be modeled as subtracting local state without metadata
+- 2P-Set histories should show that tombstones prevent re-add
+- LWW-Element-Set histories should cover older timestamps and equal-timestamp
+  tie-breaks
+- OR-Set histories should cover observed remove and concurrent add-wins merge
+
+For OR-Set, property tests should generate valid states where every entry dot is
+represented in the causal context. This keeps generated states close to the
+invariant that production updates maintain.
 
 ## Operation-Based CRDT Checks
 

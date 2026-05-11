@@ -44,6 +44,21 @@ A safe collection policy needs all of the following:
 
 Without those conditions, collection can make an old add visible again.
 
+## Stable Lower Bounds
+
+A stable lower bound is a fact about every live replica, not only the local
+replica. For a dot-based structure, it usually has the shape:
+
+```text
+for every live replica r:
+  r has observed at least version vector V
+```
+
+Only dots included by that bound can be considered globally observed. For a
+timestamp-based structure, the equivalent bound must account for the timestamp
+policy and any old add timestamps that may still be delivered from logs,
+snapshots, or delayed state messages.
+
 ## Algorithm Notes
 
 2P-Set tombstones are per element. Collection is safe only when every live
@@ -58,3 +73,9 @@ OR-Set can compact contiguous dots into a version vector, but removed dots still
 matter until all live replicas have advanced beyond them. Future delta-state
 implementations will need stricter lower-bound tracking because partial deltas
 can arrive out of order.
+
+## Current Repository Status
+
+The Phase 2 Rust implementations document delete metadata but do not implement
+garbage collection. Until a future algorithm adds membership and lower-bound
+tracking, delete metadata should be treated as durable state.
