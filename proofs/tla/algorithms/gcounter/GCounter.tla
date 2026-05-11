@@ -3,9 +3,12 @@ EXTENDS Naturals, FiniteSets
 
 CONSTANTS Replicas, MaxCounter
 
-ASSUME MaxCounter \in Nat
+ASSUME MaxCounterIsNat == MaxCounter \in Nat
 
 VARIABLES states, network
+
+Vars ==
+    <<states, network>>
 
 Max(a, b) ==
     IF a >= b THEN a ELSE b
@@ -30,6 +33,9 @@ MessageType ==
 
 StateLeq(left, right) ==
     \A actor \in Replicas : left[actor] <= right[actor]
+
+OwnerState ==
+    [actor \in Replicas |-> states[actor][actor]]
 
 JoinIdempotent ==
     \A state \in StateType :
@@ -71,14 +77,12 @@ TypeOK ==
 NoPhantomIncrements ==
     TypeOK =>
         \A replica \in Replicas :
-            \A actor \in Replicas :
-                states[replica][actor] <= states[actor][actor]
+            StateLeq(states[replica], OwnerState)
 
 MessagePayloadsRespectOwners ==
     TypeOK =>
         \A message \in network :
-            \A actor \in Replicas :
-                message.payload[actor] <= states[actor][actor]
+            StateLeq(message.payload, OwnerState)
 
 GCounterCorrectness ==
     /\ TypeOK
@@ -87,6 +91,11 @@ GCounterCorrectness ==
     /\ JoinAssociative
     /\ MergeInflationary
     /\ MergeMonotone
+    /\ NoPhantomIncrements
+    /\ MessagePayloadsRespectOwners
+
+DistributedInvariant ==
+    /\ TypeOK
     /\ NoPhantomIncrements
     /\ MessagePayloadsRespectOwners
 
@@ -109,6 +118,23 @@ PROOF
         BY DEF MergeMonotone, StateLeq, PointwiseMax, Max, StateType
     <1> QED
         BY <1>1, <1>2, <1>3, <1>4, <1>5
+
+THEOREM PointwiseMaxType ==
+    \A left \in StateType :
+        \A right \in StateType :
+            PointwiseMax(left, right) \in StateType
+PROOF
+    BY MaxCounterIsNat DEF PointwiseMax, Max, StateType
+
+THEOREM PointwiseMaxUpperBound ==
+    \A left \in StateType :
+        \A right \in StateType :
+            \A upper \in StateType :
+                /\ StateLeq(left, upper)
+                /\ StateLeq(right, upper)
+                => StateLeq(PointwiseMax(left, right), upper)
+PROOF
+    BY DEF StateLeq, PointwiseMax, Max, StateType
 
 Init ==
     /\ states = [replica \in Replicas |-> Zero]
@@ -136,13 +162,47 @@ Next ==
     \/ \E message \in network : Deliver(message)
 
 Spec ==
-    Init /\ [][Next]_<<states, network>>
+    Init /\ [][Next]_Vars
+
+THEOREM GCounterDistributedInvariantInductive ==
+    /\ Init => DistributedInvariant
+    /\ DistributedInvariant /\ [Next]_Vars => DistributedInvariant'
+PROOF
+    <1>1. Init => DistributedInvariant
+        BY MaxCounterIsNat DEF Init, DistributedInvariant, TypeOK, NoPhantomIncrements,
+            MessagePayloadsRespectOwners, OwnerState, StateLeq, Zero, StateType,
+            MessageType
+    <1>2. DistributedInvariant /\ UNCHANGED Vars => DistributedInvariant'
+        BY DEF DistributedInvariant, TypeOK, NoPhantomIncrements,
+            MessagePayloadsRespectOwners, OwnerState, StateLeq, Vars
+    <1>3. \A replica \in Replicas :
+            DistributedInvariant /\ Inc(replica) => DistributedInvariant'
+        BY MaxCounterIsNat
+            DEF DistributedInvariant, TypeOK, NoPhantomIncrements,
+                MessagePayloadsRespectOwners, OwnerState, StateLeq, Inc,
+                StateType, MessageType
+    <1>4. \A src \in Replicas :
+            \A dst \in Replicas :
+                DistributedInvariant /\ SendState(src, dst) => DistributedInvariant'
+        BY DEF DistributedInvariant, TypeOK, NoPhantomIncrements,
+            MessagePayloadsRespectOwners, OwnerState, StateLeq, SendState,
+            StateType, MessageType
+    <1>5. \A message \in network :
+            DistributedInvariant /\ Deliver(message) => DistributedInvariant'
+        BY PointwiseMaxType, PointwiseMaxUpperBound
+            DEF DistributedInvariant, TypeOK, NoPhantomIncrements,
+                MessagePayloadsRespectOwners, OwnerState, StateLeq, Deliver,
+                PointwiseMax, Max, StateType, MessageType
+    <1>6. DistributedInvariant /\ [Next]_Vars => DistributedInvariant'
+        BY <1>2, <1>3, <1>4, <1>5 DEF Next, Vars
+    <1> QED
+        BY <1>1, <1>6
 
 StateComponentsDoNotDecrease ==
     \A replica \in Replicas :
         StateLeq(states[replica], states'[replica])
 
 StateMonotonic ==
-    [][StateComponentsDoNotDecrease]_<<states, network>>
+    [][StateComponentsDoNotDecrease]_Vars
 
 ====

@@ -2,8 +2,8 @@
 
 ## Rust
 
-Rust unit tests cover permanent tombstones, component-wise merge, inflationary
-adds and removes, and convergence after merge. Property tests check the
+Rust unit tests cover permanent tombstones, component-wise merge, visible query
+behavior, and inflationary adds and removes. Property tests check the
 join-semilattice laws over generated add/remove components.
 
 ## Lean

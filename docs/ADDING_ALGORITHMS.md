@@ -64,7 +64,7 @@ theorems = [
 ]
 
 [proofs.tla]
-status = "model-checked"
+status = "proved"
 file = "../../proofs/tla/algorithms/gcounter/GCounter.tla"
 model = "../../proofs/tla/algorithms/gcounter/GCounter_MC.cfg"
 checked_bounds = "replicas = 2, counter components <= 2"
@@ -91,9 +91,12 @@ laws = [
 ]
 ```
 
-Use `status = "proved"` only after the listed Lean theorem names are checked by
-`lake build`. If an algorithm has no Lean or TLA+ artifact yet, keep an empty
-`[proofs]` table in `algorithm.toml` and describe the gap in `proofs.md`.
+Use `status = "proved"` for Lean only after the listed theorem names are checked
+by `lake build`. Use `status = "proved"` for TLA+ only after the listed module
+has checked TLAPS proofs; keep `checked_bounds` for any TLC model that is still
+run as bounded executable coverage. If an algorithm has no Lean or TLA+
+artifact yet, omit that proof subsection or keep an empty `[proofs]` table, and
+describe the gap in `proofs.md`.
 
 ## Catalog Documentation Template
 

@@ -29,7 +29,8 @@ with:
 - reusable law checks, generators, and reference-model helpers in
   `crates/crdt-testkit`
 - a Lean model in `proofs/lean`
-- a TLA+ model with a TLAPS join-law proof and TLC config in `proofs/tla`
+- a TLA+ model with TLAPS join-law and distributed-invariant proofs plus a
+  TLC config in `proofs/tla`
 - catalog metadata and documentation in `catalog/gcounter`
 
 The Phase 1 implementations add Bool OR, Max Register, PN-Counter, and G-Set
@@ -147,14 +148,14 @@ cd proofs/lean
 lake build
 ```
 
-Run the current TLA+ model:
+Run the current bounded TLC model:
 
 ```sh
 cd proofs/tla
 tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 ```
 
-Run the current TLAPS proof:
+Run the current TLAPS proofs:
 
 ```sh
 cd proofs/tla/algorithms/gcounter
@@ -178,7 +179,7 @@ tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
 | Algorithm | Family | Rust | Lean | TLA+ |
 | --- | --- | --- | --- | --- |
 | [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Proved | Not provided |
-| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Proved | TLAPS join-law proof; TLC bounded model check |
+| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Proved | TLAPS join-law and distributed-invariant proofs; TLC bounded model check |
 | [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 | [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 | [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Proved | Not provided |

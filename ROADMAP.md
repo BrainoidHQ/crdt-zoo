@@ -24,7 +24,7 @@ Exit criteria:
 
 - `cargo test --workspace` passes
 - `lake build` passes for Lean proofs
-- TLAPS runs for the G-Counter join-law proof
+- TLAPS runs for the G-Counter join-law and distributed-invariant proofs
 - TLC runs for the G-Counter config
 - the G-Counter catalog page states proof and model-checking status accurately
 

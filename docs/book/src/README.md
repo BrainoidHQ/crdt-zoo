@@ -2,13 +2,16 @@
 
 CRDT Zoo is a catalog of Conflict-free Replicated Data Types. Each exhibit links
 the human-facing explanation in `catalog/`, the Rust implementation, the Lean
-proof status, and the TLA+ model-checking status.
+proof status, and the TLA+ proof or model-checking status.
 
 The current catalog covers algebraically small state-based CRDTs and the first
 delete-aware set CRDTs. The delete-aware entries make the conflict policy
 explicit: permanent remove-wins tombstones for 2P-Set, timestamp-based
 resolution for LWW-Element-Set, and causally tracked add-wins removes for
 OR-Set.
+
+G-Counter is the deepest end-to-end example: it links Rust code, Lean proofs,
+TLAPS proofs, and a bounded TLC model.
 
 ## Catalog Browser
 

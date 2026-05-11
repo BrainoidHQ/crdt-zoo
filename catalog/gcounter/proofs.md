@@ -8,7 +8,7 @@
 | Law tests | `crates/crdt-testkit/src/law_tests.rs` | Example-based and property-based checks |
 | Reference model | `crates/crdt-algorithms/src/counters/gcounter.rs` tests | Query agreement check |
 | Lean model | `proofs/lean/Crdt/Algorithms/GCounter.lean` | Proved |
-| TLA+ model | `proofs/tla/algorithms/gcounter/GCounter.tla` | TLAPS join-law proof and TLC model check |
+| TLA+ model | `proofs/tla/algorithms/gcounter/GCounter.tla` | TLAPS join-law and distributed-invariant proofs; TLC model check |
 | Catalog metadata | `catalog/gcounter/algorithm.toml` | Present |
 
 ## Lean
@@ -40,7 +40,23 @@ component-wise maximum join laws and merge order facts:
 - inflationary merge
 - monotone merge
 
-Distributed execution is checked with TLC.
+The TLA+ module also contains TLAPS-checked distributed-invariant obligations:
+
+- `PointwiseMaxType`: merge of two bounded states remains a bounded state.
+- `PointwiseMaxUpperBound`: merging two states below the same upper bound
+  remains below that bound.
+- `GCounterDistributedInvariantInductive`: initialization establishes the
+  distributed invariant, and every `Inc`, `SendState`, `Deliver`, or stuttering
+  transition preserves it.
+
+The distributed invariant covers:
+
+- type correctness of replica states and network messages
+- no phantom increments, meaning every observed actor component is bounded by
+  that actor's owner component
+- message payloads that do not exceed the owning replica's component
+
+TLC is still run as a bounded executable model check.
 
 Current TLC bounds:
 
@@ -62,12 +78,7 @@ The TLC configuration checks:
 - `StateMonotonic`: every replica component is non-decreasing across every
   local increment, send, delivery, or stuttering step.
 
-This is still a bounded TLC model check, not an unbounded TLAPS proof of
-the full distributed execution invariant.
-
 ## Gaps
 
 - Broaden property generators beyond small actor maps.
 - Connect the total-function Lean model to finite-map extraction/query details.
-- Extend the TLAPS work from join laws to a full inductive proof of the
-  distributed invariant if that becomes a project goal.

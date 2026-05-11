@@ -28,8 +28,8 @@ Checked theorem names:
 - `Crdt.PNCounter.merge_monotone`
 - `Crdt.PNCounter.merge_converges_for_same_states`
 
-The Lean model reuses the G-Counter function model for both positive and
-negative components and proves component-wise merge laws plus inflationary
+The Lean model reuses the G-Counter function model for both increment and
+decrement components and proves component-wise merge laws plus inflationary
 increment/decrement updates. It also packages increment and decrement updates as
 a `CvRDT` instance.
 

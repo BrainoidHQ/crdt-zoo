@@ -5,8 +5,8 @@
 The state is a pair of grow-only maps:
 
 ```text
-positive: ActorId -> u64
-negative: ActorId -> u64
+increments: ActorId -> u64
+decrements: ActorId -> u64
 ```
 
 Absent actor components are interpreted as zero.
@@ -38,8 +38,8 @@ component would overflow, the update returns `CounterOverflow`.
 Merge takes component-wise maximum independently on both maps:
 
 ```text
-merge(left, right).positive[a] = max(left.positive[a], right.positive[a])
-merge(left, right).negative[a] = max(left.negative[a], right.negative[a])
+merge(left, right).increments[a] = max(left.increments[a], right.increments[a])
+merge(left, right).decrements[a] = max(left.decrements[a], right.decrements[a])
 ```
 
 ## Query
@@ -47,8 +47,8 @@ merge(left, right).negative[a] = max(left.negative[a], right.negative[a])
 `query()` returns `PNCounterValue`, which stores:
 
 ```text
-increments = sum(positive components)
-decrements = sum(negative components)
+increments = sum(increment components)
+decrements = sum(decrement components)
 ```
 
 `PNCounterValue` exposes `increments()`, `decrements()`, and `checked_net()`.

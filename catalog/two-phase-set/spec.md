@@ -43,6 +43,11 @@ The query result is:
 adds \ removes
 ```
 
+`add` returns whether the add component changed. Once an element is in
+`removes`, local `add` calls for that element are no-ops. `remove` returns
+whether it newly inserted a tombstone; removing a locally absent element still
+records that durable remove metadata.
+
 ## Correctness Intuition
 
 Both components grow monotonically, and merge is union on both components.

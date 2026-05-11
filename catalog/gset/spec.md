@@ -22,6 +22,8 @@ The Rust API exposes:
 - `query()`
 - `merge(other)`
 
+`add` returns whether the element was newly inserted.
+
 ## Merge
 
 Merge is set union:

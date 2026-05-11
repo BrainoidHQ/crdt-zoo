@@ -16,7 +16,7 @@ connect across Rust, Lean, TLA+, and tests.
 | Tombstones | None |
 | Rust status | Implemented |
 | Lean status | Proved |
-| TLA+ status | TLAPS join-law proof; TLC bounded model check |
+| TLA+ status | TLAPS join-law and distributed-invariant proofs; TLC bounded model check |
 
 ## What It Solves
 
@@ -45,5 +45,6 @@ counting observed events where decrements are not part of the data type.
   total is required.
 - Serialization support is not enabled yet.
 - Property-based generators currently cover small actor maps.
-- TLA+ has a TLAPS proof for join laws, while distributed execution is still
-  checked with a small finite TLC bound.
+- TLA+ has TLAPS proofs for the join laws and the distributed execution
+  invariant. TLC still checks a small finite model as an executable sanity
+  check.

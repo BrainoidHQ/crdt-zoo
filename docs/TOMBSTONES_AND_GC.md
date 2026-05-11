@@ -11,7 +11,7 @@ contexts are the common ways this repository records that distinction.
 | --- | --- | --- |
 | 2P-Set | Removed elements in a grow-only remove set | Remove-wins permanently |
 | LWW-Element-Set | Greatest remove timestamp per element | Timestamp-based, remove-wins ties |
-| OR-Set | Causal context with a compact version vector plus non-contiguous dots | Add-wins for concurrent add/remove |
+| OR-Set | Visible add dots plus a causal context with a compact version vector and non-contiguous dots | Add-wins for concurrent add/remove |
 
 ## Why Adds Cannot Simply Be Removed
 

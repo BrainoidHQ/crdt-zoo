@@ -32,6 +32,9 @@ The Rust API exposes:
 - `query()`
 - `merge(other)`
 
+`add` and `remove` return whether their component map changed. Equal or older
+timestamps for the same element and component are ignored.
+
 ## Merge
 
 Merge keeps the maximum timestamp for each element in each component:

@@ -1,8 +1,8 @@
 # PN-Counter
 
 PN-Counter is a state-based counter that supports both increments and
-decrements. It stores two grow-only counters: one for positive components and
-one for negative components.
+decrements. It stores two grow-only counters: one for increment components and
+one for decrement components.
 
 ## Summary
 

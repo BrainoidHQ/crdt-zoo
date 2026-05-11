@@ -34,7 +34,7 @@ theorems = [
 ]
 
 [proofs.tla]
-status = "model-checked"
+status = "proved"
 file = "../../proofs/tla/algorithms/gcounter/GCounter.tla"
 model = "../../proofs/tla/algorithms/gcounter/GCounter_MC.cfg"
 checked_bounds = "replicas = 2, counter components <= 2"

@@ -232,7 +232,8 @@ Avoid these patterns unless there is a strong reason:
 The repository now has eight implemented state-based CRDTs: the Phase 1
 semilattice basics and the Phase 2 delete-aware sets. Each implemented
 algorithm has Rust law tests and a checked Lean model; G-Counter is currently
-the only algorithm with a TLA+ model and TLAPS/TLC coverage.
+the only algorithm with a TLA+ model, TLAPS proofs for both join laws and its
+distributed invariant, and TLC coverage.
 
 ```text
 crates/

@@ -2,8 +2,9 @@
 
 CRDT Zoo uses several kinds of evidence because no single tool covers the whole
 repository boundary. Lean proves algebraic facts about mathematical models. TLA+
-explores distributed executions. Rust tests check the implementation. Reference
-models, trace replay, and fuzzing connect those worlds.
+proves selected facts with TLAPS and explores bounded distributed executions
+with TLC. Rust tests check the implementation. Reference models, trace replay,
+and fuzzing connect those worlds.
 
 ## What Counts As Evidence
 
@@ -52,9 +53,10 @@ still abstract from finite Rust container details, query extraction, or overflow
 boundaries, but their core algebraic laws are mechanically checked.
 
 In TLA+, TLAPS should prove small algebraic or inductive facts when the proof is
-maintainable. TLC remains the target for bounded exploration of local updates,
-message send, message delivery, reordering, duplication, and eventually selected
-drop behaviors.
+maintainable. The G-Counter model currently has TLAPS proofs for its join laws
+and the inductive distributed invariant. TLC remains the target for bounded
+exploration of local updates, message send, message delivery, reordering,
+duplication, and eventually selected drop behaviors.
 
 ## Delete-Aware Set Checks
 
@@ -160,7 +162,7 @@ Lean:
 
 TLA+:
   parse shared modules with tlasany
-  run TLAPS for the selected G-Counter proof
+  run TLAPS for the selected G-Counter proofs
   run TLC for the selected G-Counter config
 
 Catalog:

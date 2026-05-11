@@ -20,13 +20,13 @@ assert_eq!(left.checked_value(), Some(3));
 ## Two-Replica Exchange
 
 ```text
-left.positive  = {"a": 5}
-left.negative  = {}
-right.positive = {}
-right.negative = {"b": 2}
+left.increments  = {"a": 5}
+left.decrements  = {}
+right.increments = {}
+right.decrements = {"b": 2}
 
-merge(left, right).positive = {"a": 5}
-merge(left, right).negative = {"b": 2}
+merge(left, right).increments = {"a": 5}
+merge(left, right).decrements = {"b": 2}
 
 net = 3
 ```
