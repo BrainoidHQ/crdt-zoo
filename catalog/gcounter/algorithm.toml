@@ -1,16 +1,29 @@
-id = "g-counter"
-name = "Grow-only Counter"
+id = "gcounter"
+slug = "gcounter"
+name = "G-Counter"
+long_name = "Grow-only Counter"
 family = "counter"
-kind = ["state-based", "CvRDT"]
 difficulty = "beginner"
-status = "initial-skeleton"
+summary = "A state-based grow-only counter CRDT whose merge is component-wise maximum."
+kind = ["state-based", "CvRDT"]
+tags = ["counter", "join-semilattice", "beginner", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
 
 [rust]
 crate = "crdt-algorithms"
 module = "counters::gcounter"
 type = "GCounter"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/counters/gcounter.rs"
+api_docs_path = "rustdoc/crdt_algorithms/counters/gcounter/struct.GCounter.html"
 
 [proofs.lean]
+status = "partial"
 file = "../../proofs/lean/Crdt/Algorithms/GCounter.lean"
 theorems = [
   "Crdt.GCounter.increment_inflationary",
@@ -18,9 +31,22 @@ theorems = [
 ]
 
 [proofs.tla]
+status = "model-checked"
 file = "../../proofs/tla/algorithms/gcounter/GCounter.tla"
 model = "../../proofs/tla/algorithms/gcounter/GCounter_MC.cfg"
 checked_bounds = "replicas = 2, counter components <= 2"
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = true
 
 [properties]
 laws = [

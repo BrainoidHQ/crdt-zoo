@@ -32,6 +32,7 @@
               pkgs.clippy
               pkgs.just
               pkgs.lean4
+              pkgs.mdbook
               pkgs.rust-analyzer
               pkgs.rustc
               pkgs.rustfmt

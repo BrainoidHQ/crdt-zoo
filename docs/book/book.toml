@@ -1,0 +1,21 @@
+[book]
+title = "CRDT Zoo"
+description = "A catalog of CRDT algorithms implemented in Rust with Lean and TLA+ specifications."
+authors = ["BrainoidHQ"]
+language = "en"
+src = "src"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/BrainoidHQ/crdt-zoo"
+additional-css = ["theme/crdt-zoo.css"]
+additional-js = ["theme/catalog-filter.js"]
+site-url = "/crdt-zoo/"
+
+[output.html.search]
+enable = true
+limit-results = 30
+boost-title = 2
+boost-hierarchy = 2
+boost-paragraph = 1

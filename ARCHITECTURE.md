@@ -103,10 +103,33 @@ Every algorithm should have at least:
 
 - `algorithm.toml`
 - `README.md`
+- `spec.md`
+- `examples.md`
+- `proofs.md`
 - a Rust implementation
 - law tests
 - a proof or an explicit proof gap
 - a model or an explicit model-checking gap
+
+`catalog/` is the source of truth for the public catalog site. Generated mdBook
+files under `docs/book/src/algorithms/`, `docs/book/src/indexes/`,
+`docs/book/src/SUMMARY.md`, and `docs/book/src/assets/catalog.json` are build
+outputs derived from `catalog/` by `tools/catalog-gen`.
+
+### `docs/book`
+
+`docs/book` owns the static site wrapper for GitHub Pages:
+
+- `book.toml` configures mdBook.
+- `src/README.md` is the hand-written landing page.
+- `theme/` contains hand-written CSS and JavaScript.
+- generated `src/` children are ignored by Git and rebuilt in CI.
+
+### `tools/catalog-gen`
+
+`tools/catalog-gen` validates `catalog/*/algorithm.toml`, checks referenced
+Rust/Lean/TLA+ files, combines the per-algorithm Markdown files into mdBook
+pages, emits index pages, and writes `catalog.json` for the catalog browser.
 
 ## State-Based CRDT Vocabulary
 
@@ -217,6 +240,17 @@ catalog/
   gcounter/
     algorithm.toml
     README.md
+    spec.md
+    examples.md
+    proofs.md
+
+docs/book/
+  book.toml
+  src/README.md
+  theme/
+
+tools/
+  catalog-gen/
 ```
 
 The next architectural step is not to add many CRDTs quickly. It is to make this

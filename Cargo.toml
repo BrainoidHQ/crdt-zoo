@@ -3,6 +3,7 @@ members = [
     "crates/crdt-algorithms",
     "crates/crdt-core",
     "crates/crdt-testkit",
+    "tools/catalog-gen",
 ]
 resolver = "2"
 

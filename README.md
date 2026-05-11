@@ -41,9 +41,14 @@ crdt-zoo/
     tla/              distributed execution models and TLC configs
 
   catalog/
-    gcounter/         per-algorithm metadata and documentation
+    gcounter/         per-algorithm metadata and source documentation
 
-  docs/               contributor-facing design and process documentation
+  docs/
+    book/             mdBook configuration, theme, and generated site source
+    *.md              contributor-facing design and process documentation
+
+  tools/
+    catalog-gen/      converts catalog/ into mdBook Markdown and JSON
 ```
 
 ## Documentation
@@ -59,6 +64,12 @@ crdt-zoo/
   new catalog entry
 - [References](docs/REFERENCES.md): background material that informs the design
 
+The GitHub Pages site is generated from `catalog/` through `tools/catalog-gen`
+and mdBook. The generated `docs/book/src/SUMMARY.md`,
+`docs/book/src/algorithms/`, `docs/book/src/indexes/`, and
+`docs/book/src/assets/catalog.json` files are local build outputs, not the source
+of truth.
+
 ## Quick Start
 
 Use the Nix Flake dev shell to get Rust, Lean, and TLA+ tooling:
@@ -71,6 +82,19 @@ Run the Rust test suite:
 
 ```sh
 cargo test --workspace
+```
+
+Generate and build the catalog site:
+
+```sh
+cargo run -p catalog-gen
+mdbook build docs/book
+```
+
+Serve the catalog site locally:
+
+```sh
+mdbook serve docs/book --open
 ```
 
 Run the Lean proofs:
@@ -103,7 +127,7 @@ tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 
 | Algorithm | Family | Rust | Lean | TLA+ |
 | --- | --- | --- | --- | --- |
-| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Initial implementation | Initial model | TLC config |
+| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLC bounded model check |
 
 ## License
 

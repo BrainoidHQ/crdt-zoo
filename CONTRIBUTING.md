@@ -19,6 +19,9 @@ Useful commands:
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace
+cargo run -p catalog-gen -- --check
+cargo run -p catalog-gen
+mdbook build docs/book
 
 cd proofs/lean
 lake build
@@ -62,7 +65,7 @@ Before a new algorithm is considered ready for the catalog, it should have:
 - Lean model or an explicit proof gap
 - TLA+ model or an explicit model-checking gap
 - catalog metadata
-- catalog README
+- catalog README, spec, examples, and proofs files
 - documented complexity
 - documented network assumptions
 - documented limitations
@@ -91,6 +94,7 @@ Before committing, run the checks that match your change:
   `cargo test --workspace`
 - Lean change: `lake build` in `proofs/lean`
 - TLA+ change: TLC for the affected configs
-- Catalog change: check links and make sure proof status is honest
+- Catalog change: `cargo run -p catalog-gen -- --check`, regenerate the book
+  source, build mdBook, and make sure proof status is honest
 
 If a check cannot be run locally, mention the reason in the change description.

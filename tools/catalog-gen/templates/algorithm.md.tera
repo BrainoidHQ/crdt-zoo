@@ -1,0 +1,88 @@
+# {{ alg.name }}
+
+{% if alg.long_name %}_{{ alg.long_name }}_
+
+{% endif %}> {{ alg.summary }}
+
+<div class="crdt-badges">
+{% for k in alg.kind %}
+<span class="badge">{{ k }}</span>
+{% endfor %}
+<span class="badge">{{ alg.family }}</span>
+<span class="badge">{{ alg.difficulty }}</span>
+{% if alg.rust.status %}
+<span class="badge">Rust: {{ alg.rust.status }}</span>
+{% endif %}
+{% if alg.proofs.lean %}
+<span class="badge">Lean: {{ alg.proofs.lean.status }}</span>
+{% endif %}
+{% if alg.proofs.tla %}
+<span class="badge">TLA+: {{ alg.proofs.tla.status }}</span>
+{% endif %}
+</div>
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| ID | `{{ alg.id }}` |
+| Family | `{{ alg.family }}` |
+| Kind | `{% for k in alg.kind %}{{ k }}{% if not loop.last %}, {% endif %}{% endfor %}` |
+| Difficulty | `{{ alg.difficulty }}` |
+| Rust type | `{{ alg.rust.module }}::{{ alg.rust.type }}` |
+
+{% if alg.delivery %}
+## Delivery
+
+| Assumption | Required or tolerated |
+| --- | --- |
+| Causal delivery required | {% if alg.delivery.causal_required %}Yes{% else %}No{% endif %} |
+| Duplicate delivery tolerated | {% if alg.delivery.duplicate_tolerant %}Yes{% else %}No{% endif %} |
+| Message drops tolerated | {% if alg.delivery.drop_tolerant %}Yes, with eventual anti-entropy{% else %}No{% endif %} |
+| Exactly-once delivery required | {% if alg.delivery.exactly_once_required %}Yes{% else %}No{% endif %} |
+{% endif %}
+
+## Overview
+
+{{ readme }}
+
+## Specification
+
+{{ spec }}
+
+## Examples
+
+{{ examples }}
+
+## Proof Status
+
+{{ proof_docs }}
+
+{% if alg.proofs.lean %}
+### Lean Metadata
+
+File: `{{ lean_file_path }}`
+
+{% for theorem in alg.proofs.lean.theorems %}
+- `{{ theorem }}`
+{% endfor %}
+{% endif %}
+
+{% if alg.proofs.tla %}
+### TLA+ Metadata
+
+File: `{{ tla_file_path }}`
+
+{% if tla_model_path %}Model config: `{{ tla_model_path }}`{% endif %}
+{% if alg.proofs.tla.checked_bounds %}
+
+Checked bounds: `{{ alg.proofs.tla.checked_bounds }}`
+{% endif %}
+{% endif %}
+
+## Repository Links
+
+{% if rust_source_path %}- Rust source: `{{ rust_source_path }}`{% endif %}
+{% if alg.rust.api_docs_path %}- Rust API: [{{ alg.rust.type }}](../{{ alg.rust.api_docs_path }}){% endif %}
+{% if lean_file_path %}- Lean proof: `{{ lean_file_path }}`{% endif %}
+{% if tla_file_path %}- TLA+ spec: `{{ tla_file_path }}`{% endif %}

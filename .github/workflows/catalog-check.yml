@@ -1,0 +1,33 @@
+name: Check catalog
+
+on:
+  pull_request:
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Validate catalog
+        run: cargo run -p catalog-gen -- --check
+
+      - name: Test catalog generator
+        run: cargo test -p catalog-gen
+
+      - name: Install mdBook
+        run: cargo install mdbook --locked
+
+      - name: Generate catalog pages
+        run: cargo run -p catalog-gen
+
+      - name: Build mdBook
+        run: mdbook build docs/book

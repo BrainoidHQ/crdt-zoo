@@ -1,3 +1,8 @@
 /target/
 /result
 /.direnv/
+/docs/book/book/
+/docs/book/src/SUMMARY.md
+/docs/book/src/algorithms/
+/docs/book/src/indexes/
+/docs/book/src/assets/catalog.json

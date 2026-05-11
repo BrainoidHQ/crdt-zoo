@@ -8,40 +8,69 @@ honest.
 
 1. Create `catalog/<id>/algorithm.toml`.
 2. Create `catalog/<id>/README.md`.
-3. Add the Rust implementation.
-4. Add a reference model or document why it is deferred.
-5. Add law tests.
-6. Add a TLA+ model or document why it is deferred.
-7. Add TLC or Apalache configs with explicit bounds.
-8. Add a Lean model or document why it is deferred.
-9. Register the algorithm in docs or generated catalog indexes.
-10. Run the relevant checks.
+3. Create `catalog/<id>/spec.md`.
+4. Create `catalog/<id>/examples.md`.
+5. Create `catalog/<id>/proofs.md`.
+6. Add the Rust implementation.
+7. Add a reference model or document why it is deferred.
+8. Add law tests.
+9. Add a TLA+ model or document why it is deferred.
+10. Add TLC or Apalache configs with explicit bounds.
+11. Add a Lean model or document why it is deferred.
+12. Run `cargo run -p catalog-gen -- --check`.
+13. Run `cargo run -p catalog-gen` and `mdbook build docs/book`.
 
 ## Metadata Template
 
 ```toml
-id = "g-counter"
-name = "Grow-only Counter"
+id = "gcounter"
+slug = "gcounter"
+name = "G-Counter"
+long_name = "Grow-only Counter"
 family = "counter"
-kind = ["state-based", "CvRDT"]
 difficulty = "beginner"
-status = "initial"
+summary = "A state-based grow-only counter CRDT whose merge is component-wise maximum."
+kind = ["state-based", "CvRDT"]
+tags = ["counter", "join-semilattice", "beginner", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
 
 [rust]
 crate = "crdt-algorithms"
 module = "counters::gcounter"
 type = "GCounter"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/counters/gcounter.rs"
+api_docs_path = "rustdoc/crdt_algorithms/counters/gcounter/struct.GCounter.html"
 
 [proofs.lean]
+status = "partial"
 file = "../../proofs/lean/Crdt/Algorithms/GCounter.lean"
 theorems = [
   "Crdt.GCounter.increment_inflationary",
 ]
 
 [proofs.tla]
+status = "model-checked"
 file = "../../proofs/tla/algorithms/gcounter/GCounter.tla"
 model = "../../proofs/tla/algorithms/gcounter/GCounter_MC.cfg"
 checked_bounds = "replicas = 2, counter components <= 2"
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = true
 
 [properties]
 laws = [
@@ -52,9 +81,16 @@ laws = [
 ]
 ```
 
-## Catalog README Template
+## Catalog Documentation Template
 
-Every catalog README should answer these questions:
+Every catalog exhibit is split into four Markdown files:
+
+- `README.md`: overview, summary, delivery assumptions, and known constraints
+- `spec.md`: state, operations, merge/effect, query, laws, and complexity
+- `examples.md`: Rust API examples and small execution histories
+- `proofs.md`: Rust, Lean, TLA+, law-test status, checked bounds, and gaps
+
+Together they should answer these questions:
 
 - What problem does this CRDT solve?
 - Is it state-based, operation-based, delta-state, or hybrid?
@@ -72,6 +108,10 @@ Every catalog README should answer these questions:
 - What are the time and space costs?
 - What are the known limitations?
 - Which references are relevant?
+
+The mdBook pages are generated from these files. Do not hand-edit generated
+files under `docs/book/src/algorithms/`, `docs/book/src/indexes/`,
+`docs/book/src/SUMMARY.md`, or `docs/book/src/assets/catalog.json`.
 
 ## Proof Status Language
 
