@@ -57,6 +57,16 @@ def remove [DecidableEq Element] (element : Element) (state : State Element) :
     State Element :=
   { state with removes := GSet.add element state.removes }
 
+inductive Update (Element : Type u) where
+  | add (element : Element)
+  | remove (element : Element)
+
+def applyUpdate [DecidableEq Element] (update : Update Element)
+    (state : State Element) : State Element :=
+  match update with
+  | Update.add element => add element state
+  | Update.remove element => remove element state
+
 theorem add_inflationary [DecidableEq Element] (element : Element)
     (state : State Element) :
     leq state (add element state) := by
@@ -100,6 +110,28 @@ theorem add_after_remove_noop [DecidableEq Element] (element : Element)
     unfold remove
     exact GSet.contains_added element state.removes
   simp [hRemoved]
+
+theorem applyUpdate_inflationary [DecidableEq Element] (update : Update Element)
+    (state : State Element) :
+    leq state (applyUpdate update state) := by
+  cases update with
+  | add element => exact add_inflationary element state
+  | remove element => exact remove_inflationary element state
+
+instance [DecidableEq Element] : CvRDT (State Element) where
+  Update := Update Element
+  Query := State Element
+  apply := applyUpdate
+  query := fun state => state
+  apply_inflationary := applyUpdate_inflationary
+
+theorem merge_monotone {leftBefore leftAfter rightBefore rightAfter : State Element} :
+    leq leftBefore leftAfter ->
+    leq rightBefore rightAfter ->
+    leq
+      (JoinSemilattice.join leftBefore rightBefore)
+      (JoinSemilattice.join leftAfter rightAfter) := by
+  exact join_monotone
 
 theorem merge_converges_for_same_states (left right : State Element) :
     JoinSemilattice.join left right = JoinSemilattice.join right left :=

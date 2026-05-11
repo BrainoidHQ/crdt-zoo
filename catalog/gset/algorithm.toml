@@ -23,11 +23,13 @@ source = "../../crates/crdt-algorithms/src/sets/gset.rs"
 api_docs_path = "rustdoc/crdt_algorithms/sets/gset/struct.GSet.html"
 
 [proofs.lean]
-status = "partial"
+status = "proved"
 file = "../../proofs/lean/Crdt/Algorithms/GSet.lean"
 theorems = [
   "Crdt.GSet.add_inflationary",
   "Crdt.GSet.contains_added",
+  "Crdt.GSet.applyUpdate_inflationary",
+  "Crdt.GSet.merge_monotone",
   "Crdt.GSet.merge_converges_for_same_states",
 ]
 

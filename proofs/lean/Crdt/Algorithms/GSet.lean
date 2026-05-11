@@ -36,6 +36,14 @@ def add [DecidableEq Element] (element : Element) (state : State Element) :
     State Element :=
   JoinSemilattice.join state (singleton element)
 
+inductive Update (Element : Type u) where
+  | add (element : Element)
+
+def applyUpdate [DecidableEq Element] (update : Update Element)
+    (state : State Element) : State Element :=
+  match update with
+  | Update.add element => add element state
+
 theorem add_inflationary [DecidableEq Element] (element : Element)
     (state : State Element) :
     leq state (add element state) := by
@@ -49,6 +57,27 @@ theorem contains_added [DecidableEq Element] (element : Element)
   change join state (singleton element) element = true
   unfold singleton
   simp [join]
+
+theorem applyUpdate_inflationary [DecidableEq Element] (update : Update Element)
+    (state : State Element) :
+    leq state (applyUpdate update state) := by
+  cases update with
+  | add element => exact add_inflationary element state
+
+instance [DecidableEq Element] : CvRDT (State Element) where
+  Update := Update Element
+  Query := State Element
+  apply := applyUpdate
+  query := fun state => state
+  apply_inflationary := applyUpdate_inflationary
+
+theorem merge_monotone {leftBefore leftAfter rightBefore rightAfter : State Element} :
+    leq leftBefore leftAfter ->
+    leq rightBefore rightAfter ->
+    leq
+      (JoinSemilattice.join leftBefore rightBefore)
+      (JoinSemilattice.join leftAfter rightAfter) := by
+  exact join_monotone
 
 theorem merge_converges_for_same_states (left right : State Element) :
     JoinSemilattice.join left right = JoinSemilattice.join right left :=

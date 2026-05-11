@@ -45,10 +45,11 @@ In Lean, the target is a general theorem: if replica states are joins of the
 updates they have observed, then replicas with the same observed updates
 converge. The current Lean model includes the supporting semilattice order facts
 and a generic convergence theorem for states that are mutually below the same
-observed join. Algorithm-specific Lean files currently cover the small
-semilattice examples, counters, G-Set, 2P-Set, the LWW-Element-Set timestamp
-model, and the OR-Set causal-dot model. Some models still abstract from finite
-Rust container details, but their core algebraic laws are mechanically checked.
+observed join. Algorithm-specific Lean files cover every implemented catalog
+algorithm: the small semilattice examples, counters, G-Set, 2P-Set, the
+LWW-Element-Set timestamp model, and the OR-Set causal-dot model. Some models
+still abstract from finite Rust container details, query extraction, or overflow
+boundaries, but their core algebraic laws are mechanically checked.
 
 In TLA+, TLAPS should prove small algebraic or inductive facts when the proof is
 maintainable. TLC remains the target for bounded exploration of local updates,
@@ -89,7 +90,8 @@ of leaving them implicit.
 
 ## Reference Models
 
-Each non-trivial CRDT should have a reference model or an explicit proof gap.
+Each non-trivial CRDT should have a reference model or an explicit
+reference-model gap.
 The reference model can be slower or less memory efficient than the production
 implementation. Its job is to be simple enough to inspect.
 

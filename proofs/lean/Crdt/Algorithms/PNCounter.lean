@@ -57,6 +57,16 @@ def increment [DecidableEq Actor] (actor : Actor) (state : State Actor) : State 
 def decrement [DecidableEq Actor] (actor : Actor) (state : State Actor) : State Actor :=
   decrementBy actor 1 state
 
+inductive Update (Actor : Type u) where
+  | incrementBy (actor : Actor) (amount : Nat)
+  | decrementBy (actor : Actor) (amount : Nat)
+
+def applyUpdate [DecidableEq Actor] (update : Update Actor)
+    (state : State Actor) : State Actor :=
+  match update with
+  | Update.incrementBy actor amount => incrementBy actor amount state
+  | Update.decrementBy actor amount => decrementBy actor amount state
+
 theorem incrementBy_inflationary [DecidableEq Actor] (actor : Actor)
     (amount : Nat) (state : State Actor) :
     leq state (incrementBy actor amount state) := by
@@ -94,6 +104,30 @@ theorem decrement_inflationary [DecidableEq Actor] (actor : Actor)
     leq state (decrement actor state) := by
   unfold decrement
   exact decrementBy_inflationary actor 1 state
+
+theorem applyUpdate_inflationary [DecidableEq Actor] (update : Update Actor)
+    (state : State Actor) :
+    leq state (applyUpdate update state) := by
+  cases update with
+  | incrementBy actor amount =>
+      exact incrementBy_inflationary actor amount state
+  | decrementBy actor amount =>
+      exact decrementBy_inflationary actor amount state
+
+instance [DecidableEq Actor] : CvRDT (State Actor) where
+  Update := Update Actor
+  Query := State Actor
+  apply := applyUpdate
+  query := fun state => state
+  apply_inflationary := applyUpdate_inflationary
+
+theorem merge_monotone {leftBefore leftAfter rightBefore rightAfter : State Actor} :
+    leq leftBefore leftAfter ->
+    leq rightBefore rightAfter ->
+    leq
+      (JoinSemilattice.join leftBefore rightBefore)
+      (JoinSemilattice.join leftAfter rightAfter) := by
+  exact join_monotone
 
 theorem merge_converges_for_same_states (left right : State Actor) :
     JoinSemilattice.join left right = JoinSemilattice.join right left :=

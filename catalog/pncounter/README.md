@@ -15,7 +15,7 @@ one for negative components.
 | Deletes | Not supported |
 | Tombstones | None |
 | Rust status | Implemented |
-| Lean status | Partial proof |
+| Lean status | Proved |
 | TLA+ status | Not provided yet |
 
 ## What It Solves

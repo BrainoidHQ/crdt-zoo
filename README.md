@@ -13,9 +13,9 @@ for code, proofs, tests, and catalog pages.
 
 ## Repository Status
 
-Phase 0 and Phase 1 are complete, and the Phase 2 delete-aware set
-implementations are in place. The catalog currently contains eight implemented
-state-based CRDTs:
+Phases 0, 1, and 2 are complete for Rust implementations, catalog pages,
+property tests, and Lean models. The catalog currently contains eight
+implemented state-based CRDTs:
 
 - Bool OR, G-Counter, G-Set, and Max Register for small semilattice examples
 - PN-Counter for split positive/negative growth
@@ -34,15 +34,16 @@ with:
 
 The Phase 1 implementations add Bool OR, Max Register, PN-Counter, and G-Set
 alongside property-based law tests, small reusable generators, reference-model
-comparison helpers, Lean models for the core algebraic laws, and CI jobs for
-Rust, Lean, TLAPS, and TLC.
+comparison helpers, checked Lean models, and CI jobs for Rust, Lean, TLAPS, and
+TLC.
 
 The Phase 2 implementations add 2P-Set, LWW-Element-Set, and OR-Set, plus shared
 actor ids, replica ids, dots, dot sets, version vectors, compact causal
-contexts, and tombstone/garbage-collection documentation. The 2P-Set has a Lean
-predicate-set model, the LWW-Element-Set has a Lean timestamp model, and the
-OR-Set has a Lean causal-dot model for its core merge, add, and remove laws.
-Delete-aware TLA+ models are still deferred and called out in the catalog pages.
+contexts, and tombstone/garbage-collection documentation. The 2P-Set has a
+checked Lean predicate-set model, the LWW-Element-Set has a checked Lean
+timestamp model, and the OR-Set has a checked Lean causal-dot model for its core
+merge, add, and remove laws. Delete-aware TLA+ models are still deferred and
+called out in the catalog pages.
 
 ## Implemented Semantics
 
@@ -177,13 +178,13 @@ tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
 | Algorithm | Family | Rust | Lean | TLA+ |
 | --- | --- | --- | --- | --- |
 | [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Proved | Not provided |
-| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLAPS join-law proof; TLC bounded model check |
-| [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
+| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Proved | TLAPS join-law proof; TLC bounded model check |
+| [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 | [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
-| [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Partial proof | Not provided |
+| [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Proved | Not provided |
 | [OR-Set](catalog/orset/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
-| [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Partial proof | Not provided |
-| [2P-Set](catalog/two-phase-set/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
+| [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Proved | Not provided |
+| [2P-Set](catalog/two-phase-set/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 
 ## License
 

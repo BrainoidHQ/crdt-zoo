@@ -100,7 +100,7 @@ The repository should use TLA+ terminology precisely:
 ### `catalog`
 
 `catalog/<algorithm>/` is the exhibit page for an algorithm. It connects the
-Rust module, the Lean file, the TLA+ file, checked properties, examples,
+Rust module, the Lean file, any TLA+ file, checked properties, examples,
 complexity, and known limitations.
 
 Every algorithm should have at least:
@@ -229,8 +229,10 @@ Avoid these patterns unless there is a strong reason:
 
 ## Current Repository Shape
 
-The repository now has the Phase 1 semilattice basics and the Phase 2
-delete-aware set implementations:
+The repository now has eight implemented state-based CRDTs: the Phase 1
+semilattice basics and the Phase 2 delete-aware sets. Each implemented
+algorithm has Rust law tests and a checked Lean model; G-Counter is currently
+the only algorithm with a TLA+ model and TLAPS/TLC coverage.
 
 ```text
 crates/

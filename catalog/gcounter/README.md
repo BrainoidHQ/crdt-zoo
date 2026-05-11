@@ -15,7 +15,7 @@ connect across Rust, Lean, TLA+, and tests.
 | Deletes | Not supported |
 | Tombstones | None |
 | Rust status | Implemented |
-| Lean status | Partial proof |
+| Lean status | Proved |
 | TLA+ status | TLAPS join-law proof; TLC bounded model check |
 
 ## What It Solves

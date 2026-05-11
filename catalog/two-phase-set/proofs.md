@@ -14,12 +14,14 @@ Checked theorem names:
 - `Crdt.TwoPhaseSet.remove_inflationary`
 - `Crdt.TwoPhaseSet.remove_wins`
 - `Crdt.TwoPhaseSet.add_after_remove_noop`
+- `Crdt.TwoPhaseSet.applyUpdate_inflationary`
+- `Crdt.TwoPhaseSet.merge_monotone`
 - `Crdt.TwoPhaseSet.merge_converges_for_same_states`
 
 The Lean model represents add and remove components as boolean membership
 predicates. It proves component-wise union laws, inflationary add/remove
-updates, and the permanent remove-wins behavior for an element after it is
-tombstoned.
+updates, monotone merge, a `CvRDT` instance for add/remove updates, and the
+permanent remove-wins behavior for an element after it is tombstoned.
 
 ## TLA+
 

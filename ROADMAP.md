@@ -58,9 +58,8 @@ introducing deletes or causal metadata.
 
 ## Phase 2: Sets With Deletes
 
-Status: Rust/catalog implementation complete; Lean models now cover the 2P-Set,
-LWW-Element-Set, and OR-Set core laws. Delete-aware TLA+ models are still
-deferred.
+Status: complete for Rust implementations, catalog documentation, tests, and
+Lean models. Delete-aware TLA+ models are still deferred.
 
 Focus on sets where removal needs explicit semantics.
 
@@ -78,6 +77,7 @@ Infrastructure to build:
 - [x] causal contexts
 - [x] delivery-assumption sections in every catalog page
 - [x] tombstone and garbage-collection documentation
+- [x] property tests for delete-aware join laws and inflationary updates
 - [x] Lean models for 2P-Set, LWW-Element-Set, and OR-Set core laws
 
 Expected outcome:
@@ -167,7 +167,7 @@ These milestones apply across phases. Already in place:
 - generated catalog index from `algorithm.toml`
 - consistent proof-status badges
 
-Still planned or partial:
+Still planned:
 
 - reproducible trace replay from TLA+ counterexamples
 - optional fuzzing for serialization and delivery order

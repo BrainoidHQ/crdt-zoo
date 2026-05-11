@@ -7,7 +7,7 @@
 | Rust implementation | `crates/crdt-algorithms/src/counters/gcounter.rs` | Implemented |
 | Law tests | `crates/crdt-testkit/src/law_tests.rs` | Example-based and property-based checks |
 | Reference model | `crates/crdt-algorithms/src/counters/gcounter.rs` tests | Query agreement check |
-| Lean model | `proofs/lean/Crdt/Algorithms/GCounter.lean` | Partial proof |
+| Lean model | `proofs/lean/Crdt/Algorithms/GCounter.lean` | Proved |
 | TLA+ model | `proofs/tla/algorithms/gcounter/GCounter.tla` | TLAPS join-law proof and TLC model check |
 | Catalog metadata | `catalog/gcounter/algorithm.toml` | Present |
 
@@ -17,13 +17,14 @@ Current checked theorem names:
 
 - `Crdt.GCounter.increment_inflationary`
 - `Crdt.GCounter.incrementBy_inflationary`
+- `Crdt.GCounter.applyUpdate_inflationary`
 - `Crdt.GCounter.merge_monotone`
 - `Crdt.GCounter.merge_converges_for_same_states`
 
 The Lean file covers core inflationary-update, monotone merge, and convergence
-facts for the simplified mathematical model. The update model now matches the
-`increment_by` shape by increasing the actor component by an arbitrary natural
-amount. It is not yet a full mechanized proof of every Rust API edge case.
+facts for the mathematical model. The update model matches the `increment_by`
+shape by increasing the actor component by an arbitrary natural amount and is
+packaged as a `CvRDT` instance.
 
 The shared Lean `CvRDT` model also includes a generic theorem for replicas that
 are mutually below the same observed join.
@@ -67,6 +68,6 @@ the full distributed execution invariant.
 ## Gaps
 
 - Broaden property generators beyond small actor maps.
-- Strengthen the Lean convergence theorem around observed update sets.
+- Connect the total-function Lean model to finite-map extraction/query details.
 - Extend the TLAPS work from join laws to a full inductive proof of the
   distributed invariant if that becomes a project goal.

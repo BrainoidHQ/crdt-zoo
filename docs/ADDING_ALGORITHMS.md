@@ -53,11 +53,12 @@ source = "../../crates/crdt-algorithms/src/counters/gcounter.rs"
 api_docs_path = "rustdoc/crdt_algorithms/counters/gcounter/struct.GCounter.html"
 
 [proofs.lean]
-status = "partial"
+status = "proved"
 file = "../../proofs/lean/Crdt/Algorithms/GCounter.lean"
 theorems = [
   "Crdt.GCounter.incrementBy_inflationary",
   "Crdt.GCounter.increment_inflationary",
+  "Crdt.GCounter.applyUpdate_inflationary",
   "Crdt.GCounter.merge_monotone",
   "Crdt.GCounter.merge_converges_for_same_states",
 ]
@@ -90,8 +91,9 @@ laws = [
 ]
 ```
 
-If an algorithm has no Lean or TLA+ artifact yet, keep an empty `[proofs]`
-table in `algorithm.toml` and describe the gap in `proofs.md`.
+Use `status = "proved"` only after the listed Lean theorem names are checked by
+`lake build`. If an algorithm has no Lean or TLA+ artifact yet, keep an empty
+`[proofs]` table in `algorithm.toml` and describe the gap in `proofs.md`.
 
 ## Catalog Documentation Template
 

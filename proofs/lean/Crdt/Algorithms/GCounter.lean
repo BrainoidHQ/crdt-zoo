@@ -36,6 +36,14 @@ def incrementBy [DecidableEq Actor] (actor : Actor) (amount : Nat)
 def increment [DecidableEq Actor] (actor : Actor) (state : State Actor) : State Actor :=
   incrementBy actor 1 state
 
+inductive Update (Actor : Type u) where
+  | incrementBy (actor : Actor) (amount : Nat)
+
+def applyUpdate [DecidableEq Actor] (update : Update Actor)
+    (state : State Actor) : State Actor :=
+  match update with
+  | Update.incrementBy actor amount => incrementBy actor amount state
+
 theorem incrementBy_inflationary [DecidableEq Actor] (actor : Actor)
     (amount : Nat) (state : State Actor) :
     leq state (incrementBy actor amount state) := by
@@ -51,6 +59,20 @@ theorem increment_inflationary [DecidableEq Actor] (actor : Actor) (state : Stat
     leq state (increment actor state) := by
   unfold increment
   exact incrementBy_inflationary actor 1 state
+
+theorem applyUpdate_inflationary [DecidableEq Actor] (update : Update Actor)
+    (state : State Actor) :
+    leq state (applyUpdate update state) := by
+  cases update with
+  | incrementBy actor amount =>
+      exact incrementBy_inflationary actor amount state
+
+instance [DecidableEq Actor] : CvRDT (State Actor) where
+  Update := Update Actor
+  Query := State Actor
+  apply := applyUpdate
+  query := fun state => state
+  apply_inflationary := applyUpdate_inflationary
 
 theorem merge_monotone {leftBefore leftAfter rightBefore rightAfter : State Actor} :
     leq leftBefore leftAfter ->

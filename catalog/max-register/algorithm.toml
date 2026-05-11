@@ -23,10 +23,12 @@ source = "../../crates/crdt-algorithms/src/registers/max.rs"
 api_docs_path = "rustdoc/crdt_algorithms/registers/max/struct.MaxRegister.html"
 
 [proofs.lean]
-status = "partial"
+status = "proved"
 file = "../../proofs/lean/Crdt/Algorithms/MaxRegister.lean"
 theorems = [
   "Crdt.MaxRegister.assign_inflationary",
+  "Crdt.MaxRegister.applyUpdate_inflationary",
+  "Crdt.MaxRegister.merge_monotone",
   "Crdt.MaxRegister.merge_converges_for_same_states",
 ]
 
