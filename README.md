@@ -40,9 +40,9 @@ Rust, Lean, TLAPS, and TLC.
 The Phase 2 implementations add 2P-Set, LWW-Element-Set, and OR-Set, plus shared
 actor ids, replica ids, dots, dot sets, version vectors, compact causal
 contexts, and tombstone/garbage-collection documentation. The 2P-Set has a Lean
-predicate-set model for its core laws, and the LWW-Element-Set has a Lean
-timestamp model for its core laws. OR-Set Lean work and delete-aware TLA+ models
-are still deferred and called out in the catalog pages.
+predicate-set model, the LWW-Element-Set has a Lean timestamp model, and the
+OR-Set has a Lean causal-dot model for its core merge, add, and remove laws.
+Delete-aware TLA+ models are still deferred and called out in the catalog pages.
 
 ## Implemented Semantics
 
@@ -181,7 +181,7 @@ tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
 | [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
 | [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 | [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Partial proof | Not provided |
-| [OR-Set](catalog/orset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
+| [OR-Set](catalog/orset/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 | [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Partial proof | Not provided |
 | [2P-Set](catalog/two-phase-set/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
 

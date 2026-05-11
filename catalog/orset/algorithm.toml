@@ -24,6 +24,20 @@ api_docs_path = "rustdoc/crdt_algorithms/sets/orset/struct.ORSet.html"
 
 [proofs]
 
+[proofs.lean]
+status = "proved"
+file = "../../proofs/lean/Crdt/Algorithms/ORSet.lean"
+theorems = [
+  "Crdt.ORSet.add_contains_dot",
+  "Crdt.ORSet.add_observes_dot",
+  "Crdt.ORSet.add_inflationary",
+  "Crdt.ORSet.remove_inflationary",
+  "Crdt.ORSet.observed_remove_clears_dot",
+  "Crdt.ORSet.concurrent_add_wins",
+  "Crdt.ORSet.merge_monotone",
+  "Crdt.ORSet.merge_converges_for_same_states",
+]
+
 [delivery]
 causal_required = false
 duplicate_tolerant = true

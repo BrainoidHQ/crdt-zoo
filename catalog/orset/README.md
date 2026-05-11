@@ -15,7 +15,7 @@ allocates a dot that the remover has not observed, so it survives merge.
 | Deletes | Observed-remove by dot |
 | Tombstones | Causal context records observed dots |
 | Rust status | Implemented |
-| Lean status | Not provided yet |
+| Lean status | Proved core causal-dot model laws |
 | TLA+ status | Not provided yet |
 
 ## What It Solves

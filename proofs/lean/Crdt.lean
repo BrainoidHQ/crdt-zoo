@@ -5,5 +5,6 @@ import Crdt.Algorithms.GCounter
 import Crdt.Algorithms.GSet
 import Crdt.Algorithms.LWWElementSet
 import Crdt.Algorithms.MaxRegister
+import Crdt.Algorithms.ORSet
 import Crdt.Algorithms.PNCounter
 import Crdt.Algorithms.TwoPhaseSet

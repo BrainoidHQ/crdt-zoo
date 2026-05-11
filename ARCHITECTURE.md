@@ -261,6 +261,7 @@ proofs/
   lean/Crdt/Algorithms/GSet.lean
   lean/Crdt/Algorithms/LWWElementSet.lean
   lean/Crdt/Algorithms/MaxRegister.lean
+  lean/Crdt/Algorithms/ORSet.lean
   lean/Crdt/Algorithms/PNCounter.lean
   lean/Crdt/Algorithms/TwoPhaseSet.lean
   tla/modules/StateBasedCommon.tla
@@ -287,6 +288,6 @@ tools/
 ```
 
 The next architectural step is to make the remaining delete-aware path deeper:
-reference models for OR-Set-like histories, Lean models for causal metadata
-where practical, and TLA+ models that exercise stale, duplicated, reordered,
-and concurrent state delivery.
+reference models for OR-Set-like histories, tighter links between the Lean
+causal-dot model and finite Rust maps, and TLA+ models that exercise stale,
+duplicated, reordered, and concurrent state delivery.

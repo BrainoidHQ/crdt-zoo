@@ -46,8 +46,9 @@ updates they have observed, then replicas with the same observed updates
 converge. The current Lean model includes the supporting semilattice order facts
 and a generic convergence theorem for states that are mutually below the same
 observed join. Algorithm-specific Lean files currently cover the small
-semilattice examples, counters, G-Set, 2P-Set, and the LWW-Element-Set
-timestamp model; OR-Set's causal merge rule remains a proof gap.
+semilattice examples, counters, G-Set, 2P-Set, the LWW-Element-Set timestamp
+model, and the OR-Set causal-dot model. Some models still abstract from finite
+Rust container details, but their core algebraic laws are mechanically checked.
 
 In TLA+, TLAPS should prove small algebraic or inductive facts when the proof is
 maintainable. TLC remains the target for bounded exploration of local updates,
