@@ -23,10 +23,15 @@ The Rust API exposes:
 - `decrement_by(actor, amount)`
 - `increment_component(actor)`
 - `decrement_component(actor)`
+- `increments()`
+- `decrements()`
 - `value()`
 - `checked_value()`
 - `query()`
 - `merge(other)`
+
+Incrementing or decrementing by zero is a no-op. If either internal `u64`
+component would overflow, the update returns `CounterOverflow`.
 
 ## Merge
 
@@ -46,7 +51,9 @@ increments = sum(positive components)
 decrements = sum(negative components)
 ```
 
-The signed net value is available through `checked_value()`.
+`PNCounterValue` exposes `increments()`, `decrements()`, and `checked_net()`.
+The signed net value for a counter is available through `checked_value()`, which
+returns `None` when the net value does not fit in `i128`.
 
 ## Correctness Intuition
 

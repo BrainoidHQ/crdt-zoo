@@ -10,7 +10,9 @@ context : CausalContext
 ```
 
 Each dot is `(actor, counter)`. The causal context contains every dot this state
-has observed, including dots removed from `entries`.
+has observed, including dots removed from `entries`. Contiguous observations are
+compacted into a version vector; non-contiguous observations remain in a dot
+set.
 
 ## Operations
 
@@ -29,6 +31,11 @@ The Rust API exposes:
 - `is_empty()`
 - `query()`
 - `merge(other)`
+
+`from_entries` drops empty entry dot sets and observes every retained entry dot
+into the causal context, preserving the merge invariant. `add` returns the
+allocated dot and reports `DotOverflow` if the actor-local dot counter would
+overflow. `remove` returns whether a visible entry was cleared locally.
 
 ## Merge
 
@@ -50,7 +57,9 @@ The query result contains every element whose dot set is non-empty.
 
 Remove is not a global anti-add. It only removes the add dots that were visible
 to the remover. A concurrent add creates a dot absent from the remover's causal
-context, so merge preserves that dot and the element remains visible.
+context, so merge preserves that dot and the element remains visible. The causal
+context is part of the state; it is what lets another replica distinguish
+"missing because unobserved" from "missing because removed."
 
 ## Complexity
 

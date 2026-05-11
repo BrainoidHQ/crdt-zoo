@@ -9,7 +9,9 @@ adds    : Element -> Timestamp
 removes : Element -> Timestamp
 ```
 
-Missing entries mean no timestamp has been observed for that component.
+Missing entries mean no timestamp has been observed for that component. The
+Rust type is generic over timestamp values that implement `Ord`; the default
+timestamp type is `u64`.
 
 ## Operations
 
@@ -53,7 +55,9 @@ Equal timestamps are remove-wins.
 
 The state grows by replacing component timestamps only with greater timestamps.
 Merge is a pointwise maximum, which is associative, commutative, and
-idempotent. Delete semantics are not causal: the largest timestamp decides.
+idempotent. Equal or older local timestamps leave a component unchanged. Delete
+semantics are not causal: the largest timestamp decides, and equal add/remove
+timestamps resolve to removed.
 
 ## Complexity
 

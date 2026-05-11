@@ -22,7 +22,19 @@ status = "implemented"
 source = "../../crates/crdt-algorithms/src/sets/lww_element.rs"
 api_docs_path = "rustdoc/crdt_algorithms/sets/lww_element/struct.LWWElementSet.html"
 
-[proofs]
+[proofs.lean]
+status = "proved"
+file = "../../proofs/lean/Crdt/Algorithms/LWWElementSet.lean"
+theorems = [
+  "Crdt.LWWElementSet.add_inflationary",
+  "Crdt.LWWElementSet.remove_inflationary",
+  "Crdt.LWWElementSet.added_visible_without_remove",
+  "Crdt.LWWElementSet.equal_timestamps_remove_win",
+  "Crdt.LWWElementSet.older_add_timestamp_ignored",
+  "Crdt.LWWElementSet.older_remove_timestamp_ignored",
+  "Crdt.LWWElementSet.merge_monotone",
+  "Crdt.LWWElementSet.merge_converges_for_same_states",
+]
 
 [delivery]
 causal_required = false
@@ -43,5 +55,7 @@ laws = [
   "join is idempotent",
   "add timestamp update is inflationary",
   "remove timestamp update is inflationary",
+  "merge is monotone",
+  "older timestamp updates are ignored",
   "equal timestamps are remove-wins",
 ]

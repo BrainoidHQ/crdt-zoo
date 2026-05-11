@@ -37,6 +37,7 @@ the negative total.
 ## Known Constraints
 
 - Components are `u64`; overflow is reported by the Rust API.
+- Incrementing or decrementing by zero is a no-op.
 - Query returns split totals. Use `checked_value()` for a signed `i128` when it
   fits.
 - The Lean model covers component growth and merge laws; query summation and

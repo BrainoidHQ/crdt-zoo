@@ -37,7 +37,10 @@ visible.
 ## Known Constraints
 
 - Actor ids must be stable and unique per logical writer.
-- Metadata grows with add dots and causal context entries.
+- Metadata includes visible add dots plus a causal context. Contiguous observed
+  dots compact into a version vector; non-contiguous observations remain as dot
+  entries.
+- `add` can return `DotOverflow` if an actor-local dot counter is exhausted.
 - Garbage collection needs a stable lower bound proving all live replicas have
   observed removed dots.
 - Elements and actor ids must implement `Clone + Ord`.

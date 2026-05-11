@@ -15,7 +15,7 @@ implementation uses remove-wins semantics when timestamps are equal.
 | Deletes | Timestamped remove marker |
 | Tombstones | Remove timestamps by element |
 | Rust status | Implemented |
-| Lean status | Not provided yet |
+| Lean status | Proved |
 | TLA+ status | Not provided yet |
 
 ## What It Solves
@@ -39,6 +39,8 @@ policy and wants compact delete metadata compared with per-add dots.
 - Clock skew can make an older real-world action win if it carries a larger
   timestamp.
 - Equal add and remove timestamps resolve to removed.
+- Equal or older timestamps for the same component are ignored by local updates.
 - Remove timestamps are delete metadata and need the same care as tombstones for
   garbage collection.
-- Elements must implement `Clone + Ord`; timestamps must implement `Clone + Ord`.
+- Elements must implement `Clone + Ord`; timestamps must implement `Clone + Ord`
+  for merge and query operations.

@@ -259,6 +259,7 @@ proofs/
   lean/Crdt/Algorithms/BoolOr.lean
   lean/Crdt/Algorithms/GCounter.lean
   lean/Crdt/Algorithms/GSet.lean
+  lean/Crdt/Algorithms/LWWElementSet.lean
   lean/Crdt/Algorithms/MaxRegister.lean
   lean/Crdt/Algorithms/PNCounter.lean
   lean/Crdt/Algorithms/TwoPhaseSet.lean
@@ -285,7 +286,7 @@ tools/
   catalog-gen/
 ```
 
-The next architectural step is to make the delete-aware path deeper: reference
-models for OR-Set-like histories, Lean models for causal metadata where
-practical, and TLA+ models that exercise stale, duplicated, reordered, and
-concurrent state delivery.
+The next architectural step is to make the remaining delete-aware path deeper:
+reference models for OR-Set-like histories, Lean models for causal metadata
+where practical, and TLA+ models that exercise stale, duplicated, reordered,
+and concurrent state delivery.

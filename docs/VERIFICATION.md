@@ -45,7 +45,9 @@ In Lean, the target is a general theorem: if replica states are joins of the
 updates they have observed, then replicas with the same observed updates
 converge. The current Lean model includes the supporting semilattice order facts
 and a generic convergence theorem for states that are mutually below the same
-observed join.
+observed join. Algorithm-specific Lean files currently cover the small
+semilattice examples, counters, G-Set, 2P-Set, and the LWW-Element-Set
+timestamp model; OR-Set's causal merge rule remains a proof gap.
 
 In TLA+, TLAPS should prove small algebraic or inductive facts when the proof is
 maintainable. TLC remains the target for bounded exploration of local updates,
@@ -100,9 +102,9 @@ compare query results and important invariants
 ```
 
 The current testkit exposes `ReferenceModel` and `assert_query_matches`.
-G-Counter and PN-Counter already use that pattern in their Rust tests.
-Reference models are especially useful for OR-Set, maps, and sequence CRDTs
-where the optimized representation can obscure the intended semantics.
+G-Counter and PN-Counter already use that pattern in their Rust tests. Reference
+models are still especially useful future work for OR-Set, maps, and sequence
+CRDTs where the optimized representation can obscure the intended semantics.
 
 ## Trace Replay
 

@@ -13,8 +13,8 @@ for code, proofs, tests, and catalog pages.
 
 ## Repository Status
 
-Phase 0 and Phase 1 are complete, and the Phase 2 Rust/catalog work for
-delete-aware sets is in place. The catalog currently contains eight implemented
+Phase 0 and Phase 1 are complete, and the Phase 2 delete-aware set
+implementations are in place. The catalog currently contains eight implemented
 state-based CRDTs:
 
 - Bool OR, G-Counter, G-Set, and Max Register for small semilattice examples
@@ -38,10 +38,11 @@ comparison helpers, Lean models for the core algebraic laws, and CI jobs for
 Rust, Lean, TLAPS, and TLC.
 
 The Phase 2 implementations add 2P-Set, LWW-Element-Set, and OR-Set, plus shared
-actor ids, replica ids, dots, dot sets, version vectors, causal contexts, and
-tombstone/garbage-collection documentation. The 2P-Set has a Lean predicate-set
-model for its core laws; Lean/TLA+ models for the more advanced delete-aware
-sets are still deferred and called out in the catalog pages.
+actor ids, replica ids, dots, dot sets, version vectors, compact causal
+contexts, and tombstone/garbage-collection documentation. The 2P-Set has a Lean
+predicate-set model for its core laws, and the LWW-Element-Set has a Lean
+timestamp model for its core laws. OR-Set Lean work and delete-aware TLA+ models
+are still deferred and called out in the catalog pages.
 
 ## Implemented Semantics
 
@@ -178,7 +179,7 @@ tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
 | [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Proved | Not provided |
 | [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLAPS join-law proof; TLC bounded model check |
 | [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
-| [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
+| [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Proved | Not provided |
 | [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Partial proof | Not provided |
 | [OR-Set](catalog/orset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
 | [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Partial proof | Not provided |

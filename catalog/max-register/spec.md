@@ -8,7 +8,8 @@ The state is an optional value:
 state in None | Some(value)
 ```
 
-`None` is the bottom element.
+`None` is the bottom element. The Rust type is generic over values that
+implement `Ord`.
 
 ## Operations
 
@@ -38,9 +39,10 @@ The query result is a cloned `Option<T>`.
 
 ## Correctness Intuition
 
-Each assignment joins the current register with a singleton value. Because
-maximum is associative, commutative, and idempotent, replicas that observe the
-same values converge on the same maximum.
+Each assignment joins the current register with a singleton value and keeps the
+new value only when it is greater than the stored value. Because maximum is
+associative, commutative, and idempotent, replicas that observe the same values
+converge on the same maximum.
 
 ## Complexity
 

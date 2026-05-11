@@ -77,6 +77,6 @@ because partial deltas can arrive out of order.
 
 ## Current Repository Status
 
-The Phase 2 Rust implementations document delete metadata but do not implement
-garbage collection. Until a future algorithm adds membership and lower-bound
-tracking, delete metadata should be treated as durable state.
+The Phase 2 Rust implementations store and document delete metadata, but they do
+not implement garbage collection. Until a future algorithm adds membership and
+lower-bound tracking, delete metadata should be treated as durable state.

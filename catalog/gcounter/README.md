@@ -41,6 +41,8 @@ counting observed events where decrements are not part of the data type.
 
 - Decrement is not supported. Use PN-Counter when decrement support is needed.
 - Components are `u64`; overflow is reported by the Rust API.
+- Aggregate query results are `u128`; use `checked_value_u64()` when a `u64`
+  total is required.
 - Serialization support is not enabled yet.
 - Property-based generators currently cover small actor maps.
 - TLA+ has a TLAPS proof for join laws, while distributed execution is still

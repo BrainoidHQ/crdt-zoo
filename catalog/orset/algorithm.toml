@@ -42,6 +42,7 @@ laws = [
   "join is commutative",
   "join is idempotent",
   "add is inflationary",
+  "remove is inflationary",
   "observed remove clears observed dots",
   "concurrent add wins over remove",
 ]
