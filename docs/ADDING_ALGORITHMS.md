@@ -15,11 +15,13 @@ honest.
 7. Add a reference model or document why it is deferred.
 8. Add law tests.
 9. Add a TLA+ model or document why it is deferred.
-10. Add TLC or Apalache configs with explicit bounds.
-11. Add a Lean model or document why it is deferred.
-12. Run `cargo run -p catalog-gen -- --check`.
-13. Run `cargo run -p catalog-gen` and `mdbook build docs/book`.
-14. Update the repository-level documentation when the new algorithm changes a
+10. Add TLAPS proofs for tractable TLA+ theorems, or document why they are
+    deferred.
+11. Add TLC or Apalache configs with explicit bounds.
+12. Add a Lean model or document why it is deferred.
+13. Run `cargo run -p catalog-gen -- --check`.
+14. Run `cargo run -p catalog-gen` and `mdbook build docs/book`.
+15. Update the repository-level documentation when the new algorithm changes a
     family, shared abstraction, or phase status.
 
 ## Metadata Template
@@ -120,6 +122,7 @@ files under `docs/book/src/algorithms/`, `docs/book/src/indexes/`,
 Use precise language:
 
 - "Lean proved" means checked by Lean.
+- "TLAPS proved" means checked by TLAPS.
 - "TLC checked for replicas <= 3" means bounded model checking.
 - "Rust law-tested" means tested over the configured examples or generated
   inputs.

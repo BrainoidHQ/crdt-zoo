@@ -84,10 +84,10 @@ that the Rust API commits to preserving.
 
 ### `proofs/tla`
 
-TLA+ models distributed executions. It is the right place to explore message
-ordering, delivery, duplication, drops, and bounded networks. TLA+ model checks
-are powerful, but they are bounded checks unless a specification is separately
-proved with TLAPS. Catalog pages must state checked bounds clearly.
+TLA+ models distributed executions and can also carry TLAPS proofs for facts
+that are worth checking in TLA+ itself. TLC model checks are powerful, but they
+are bounded checks unless a specification is separately proved with TLAPS.
+Catalog pages must state checked bounds clearly.
 
 The repository should use TLA+ terminology precisely:
 

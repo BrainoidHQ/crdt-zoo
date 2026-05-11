@@ -13,6 +13,7 @@ models, trace replay, and fuzzing connect those worlds.
 | Rust law tests | Algebraic laws over tested inputs | Laws for all possible values |
 | Property tests | Laws over many generated inputs | Exhaustive correctness |
 | Reference models | Agreement with a simpler model | That the reference model is complete |
+| TLA+ with TLAPS | Machine-checked TLA+ theorems | That unchecked temporal properties also hold |
 | TLA+ with TLC | Bounded distributed executions | Unbounded correctness |
 | TLA+ with Apalache | Bounded symbolic checks | Unbounded correctness |
 | Lean | Machine-checked mathematical theorems | That Rust code exactly implements the model |
@@ -44,9 +45,10 @@ converge. The current Lean model includes the supporting semilattice order facts
 and a generic convergence theorem for states that are mutually below the same
 observed join.
 
-In TLA+, the target is a bounded model that explores local updates, message
-send, message delivery, reordering, duplication, and eventually selected drop
-behaviors.
+In TLA+, TLAPS should prove small algebraic or inductive facts when the proof is
+maintainable. TLC remains the target for bounded exploration of local updates,
+message send, message delivery, reordering, duplication, and eventually selected
+drop behaviors.
 
 ## Delete-Aware Set Checks
 

@@ -21,13 +21,13 @@ complete exhibit is the Grow-only Counter (G-Counter), with:
 - shared algebraic traits in `crates/crdt-core`
 - reusable law checks in `crates/crdt-testkit`
 - a Lean model in `proofs/lean`
-- a TLA+ model and TLC config in `proofs/tla`
+- a TLA+ model with a TLAPS join-law proof and TLC config in `proofs/tla`
 - catalog metadata and documentation in `catalog/gcounter`
 
 The Phase 1 implementations add Bool OR, Max Register, PN-Counter, and G-Set
 alongside property-based law tests, small reusable generators, reference-model
 comparison helpers, Lean models for the core algebraic laws, and CI jobs for
-Rust, Lean, and TLC.
+Rust, Lean, TLAPS, and TLC.
 
 The Phase 2 implementations add 2P-Set, LWW-Element-Set, and OR-Set, plus shared
 actor ids, replica ids, dots, dot sets, version vectors, causal contexts, and
@@ -63,7 +63,7 @@ crdt-zoo/
 
   proofs/
     lean/             algebraic models and mechanically checked Lean proofs
-    tla/              distributed execution models and TLC configs
+    tla/              TLAPS proofs, distributed execution models, and TLC configs
 
   catalog/
     */                per-algorithm metadata and source documentation
@@ -162,7 +162,7 @@ tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
 | Algorithm | Family | Rust | Lean | TLA+ |
 | --- | --- | --- | --- | --- |
 | [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Proved | Not provided |
-| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLC bounded model check |
+| [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLAPS join-law proof; TLC bounded model check |
 | [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
 | [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
 | [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Partial proof | Not provided |

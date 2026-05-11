@@ -16,7 +16,7 @@ connect across Rust, Lean, TLA+, and tests.
 | Tombstones | None |
 | Rust status | Implemented |
 | Lean status | Partial proof |
-| TLA+ status | Model-checked by TLC with bounded configuration |
+| TLA+ status | TLAPS join-law proof; TLC bounded model check |
 
 ## What It Solves
 

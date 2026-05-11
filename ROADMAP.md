@@ -16,7 +16,7 @@ Goals:
 - implement G-Counter
 - add reusable law checks
 - add a minimal Lean model
-- add a minimal TLA+ model and TLC config
+- add a minimal TLA+ model, TLAPS proof, and TLC config
 - create the first catalog page
 - provide a Nix dev shell
 
@@ -24,6 +24,7 @@ Exit criteria:
 
 - `cargo test --workspace` passes
 - `lake build` passes for Lean proofs
+- TLAPS runs for the G-Counter join-law proof
 - TLC runs for the G-Counter config
 - the G-Counter catalog page states proof and model-checking status accurately
 
@@ -48,7 +49,7 @@ Infrastructure to build:
 - [x] a reference-model pattern
 - [x] more complete Lean convergence theorem for state-based CRDTs
 - [x] a reusable TLA+ network module
-- [x] CI jobs for Rust, Lean, and TLC
+- [x] CI jobs for Rust, Lean, TLAPS, and TLC
 
 Expected outcome:
 
@@ -158,7 +159,8 @@ test, and model causality-heavy set and map CRDTs.
 
 These milestones apply across phases:
 
-- CI for Rust formatting, clippy, tests, docs, Lean, and selected TLC configs
+- CI for Rust formatting, clippy, tests, docs, Lean, selected TLAPS proofs, and
+  selected TLC configs
 - generated catalog index from `algorithm.toml`
 - consistent proof-status badges
 - reproducible trace replay from TLA+ counterexamples
