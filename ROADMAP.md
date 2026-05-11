@@ -7,7 +7,7 @@ algorithm files.
 
 ## Phase 0: Initial Skeleton
 
-Status: in progress.
+Status: ✓ complete.
 
 Goals:
 
