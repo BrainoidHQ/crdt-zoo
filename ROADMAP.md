@@ -29,7 +29,7 @@ Exit criteria:
 
 ## Phase 1: Semilattice Basics
 
-Status: implementation complete; proof/model coverage still expanding.
+Status: ✓ complete.
 
 Focus on CRDTs where the algebra is small and visible.
 
