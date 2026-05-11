@@ -13,13 +13,21 @@ for code, proofs, tests, and catalog pages.
 
 ## Repository Status
 
-Phase 0 is complete, and the catalog now includes the Phase 1 semilattice
-basics plus the Phase 2 Rust implementations for sets with deletes. The first
-complete exhibit is the Grow-only Counter (G-Counter), with:
+Phase 0 and Phase 1 are complete, and the Phase 2 Rust/catalog work for
+delete-aware sets is in place. The catalog currently contains eight implemented
+state-based CRDTs:
+
+- Bool OR, G-Counter, G-Set, and Max Register for small semilattice examples
+- PN-Counter for split positive/negative growth
+- 2P-Set, LWW-Element-Set, and OR-Set for delete-aware set semantics
+
+The strongest end-to-end exhibit remains the Grow-only Counter (G-Counter),
+with:
 
 - a Rust implementation in `crates/crdt-algorithms`
 - shared algebraic traits in `crates/crdt-core`
-- reusable law checks in `crates/crdt-testkit`
+- reusable law checks, generators, and reference-model helpers in
+  `crates/crdt-testkit`
 - a Lean model in `proofs/lean`
 - a TLA+ model with a TLAPS join-law proof and TLC config in `proofs/tla`
 - catalog metadata and documentation in `catalog/gcounter`
@@ -57,9 +65,9 @@ describes when delete metadata can be reclaimed safely.
 ```text
 crdt-zoo/
   crates/
-    crdt-core/        shared traits and algebraic vocabulary
+    crdt-core/        shared traits, ids, and causal metadata
     crdt-algorithms/  concrete CRDT implementations
-    crdt-testkit/     reusable law checks and future trace/model testing tools
+    crdt-testkit/     law checks, proptest generators, and reference helpers
 
   proofs/
     lean/             algebraic models and mechanically checked Lean proofs
@@ -92,10 +100,10 @@ crdt-zoo/
 - [References](docs/REFERENCES.md): background material that informs the design
 
 The GitHub Pages site is generated from `catalog/` through `tools/catalog-gen`
-and mdBook. The generated `docs/book/src/SUMMARY.md`,
-`docs/book/src/algorithms/`, `docs/book/src/indexes/`, and
-`docs/book/src/assets/catalog.json` files are local build outputs, not the source
-of truth.
+and mdBook. The hand-written landing page is `docs/book/src/README.md`. The
+generated `docs/book/src/SUMMARY.md`, `docs/book/src/algorithms/`,
+`docs/book/src/indexes/`, and `docs/book/src/assets/catalog.json` files are
+local build outputs, not the source of truth.
 
 ## Quick Start
 
@@ -114,6 +122,12 @@ cargo test --workspace
 Generate and build the catalog site:
 
 ```sh
+just book
+```
+
+The underlying commands are:
+
+```sh
 cargo run -p catalog-gen
 mdbook build docs/book
 ```
@@ -121,7 +135,7 @@ mdbook build docs/book
 Serve the catalog site locally:
 
 ```sh
-mdbook serve docs/book --open
+just serve
 ```
 
 Run the Lean proofs:

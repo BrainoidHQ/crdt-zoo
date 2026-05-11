@@ -25,11 +25,13 @@ OR-Set.
 
 ## Reading Paths
 
-Start with the small semilattices:
+Start with the small semilattices and counters:
 
 1. [Bool OR](algorithms/bool-or.md)
 2. [G-Counter](algorithms/gcounter.md)
 3. [G-Set](algorithms/gset.md)
+4. [Max Register](algorithms/max-register.md)
+5. [PN-Counter](algorithms/pncounter.md)
 
 Then compare the delete-aware set designs:
 

@@ -4,7 +4,7 @@
 
 ```rust
 use crdt_algorithms::sets::ORSet;
-use crdt_core::CvRDT;
+use crdt_core::{CvRDT, JoinSemilattice};
 
 let mut left = ORSet::new();
 let mut right = ORSet::new();

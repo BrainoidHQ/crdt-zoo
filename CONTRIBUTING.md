@@ -21,6 +21,7 @@ cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace
 cargo doc --workspace --no-deps
 cargo run -p catalog-gen -- --check
+cargo test -p catalog-gen
 cargo run -p catalog-gen
 mdbook build docs/book
 
@@ -32,6 +33,14 @@ cd algorithms/gcounter
 tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
 cd ../..
 tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
+```
+
+The `justfile` wraps the common catalog commands:
+
+```sh
+just check-catalog
+just book
+just serve
 ```
 
 ## Expected Change Shape
@@ -108,6 +117,7 @@ Before committing, run the checks that match your change:
 - Lean change: `lake build` in `proofs/lean`
 - TLA+ change: TLAPS for affected proofs and TLC for affected configs
 - Catalog change: `cargo run -p catalog-gen -- --check`, regenerate the book
-  source, build mdBook, and make sure proof status is honest
+  source, run `cargo test -p catalog-gen`, build mdBook, and make sure proof
+  status is honest
 
 If a check cannot be run locally, mention the reason in the change description.

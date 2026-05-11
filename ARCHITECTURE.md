@@ -13,7 +13,7 @@ The repository has three conceptual layers.
 | --- | --- | --- |
 | Specification | Define the abstract meaning of CRDTs and their laws. | Lean, TLA+ |
 | Implementation | Provide usable Rust APIs and data structures. | Rust |
-| Connection | Check that the implementation behaves like the specification. | Law tests, model-based tests, trace replay |
+| Connection | Check that the implementation behaves like the specification. | Law tests, property tests, reference comparisons; trace replay planned |
 
 The project does not try to prove compiled Rust code directly in Lean or TLA+.
 That would make the first useful version too heavy. Instead, the intended flow
@@ -62,15 +62,16 @@ dot or a dot-counter overflow error.
 ### `crates/crdt-testkit`
 
 `crdt-testkit` owns reusable checks. Its role is to prevent every algorithm from
-rewriting the same law tests, history generators, and model comparison logic.
-Today it contains deterministic law checks. Over time it should grow into:
+rewriting the same law tests, generators, and model comparison logic. It
+currently contains:
 
-- property-based law tests
-- reusable generators for causal metadata
-- operation history generators
-- network simulators
-- reference model comparison helpers
-- TLA+ trace replay utilities
+- example-style join and inflationary-update assertions
+- proptest-compatible join and inflationary-update checks
+- small generators for actor ids, component maps, sets, dots, and dot sets
+- reference-model query comparison helpers
+
+The next additions should be operation history generators, network simulators,
+and TLA+ trace replay utilities.
 
 ### `proofs/lean`
 
@@ -132,7 +133,8 @@ outputs derived from `catalog/` by `tools/catalog-gen`.
 
 `tools/catalog-gen` validates `catalog/*/algorithm.toml`, checks referenced
 Rust/Lean/TLA+ files, combines the per-algorithm Markdown files into mdBook
-pages, emits index pages, and writes `catalog.json` for the catalog browser.
+pages, emits grouped index pages, writes `SUMMARY.md`, and writes
+`catalog.json` for the catalog browser.
 
 ## State-Based CRDT Vocabulary
 
@@ -249,20 +251,29 @@ crates/
   crdt-testkit/
     src/generators.rs
     src/law_tests.rs
+    src/reference.rs
 
 proofs/
   lean/Crdt/Algebra/JoinSemilattice.lean
   lean/Crdt/StateBased/CvRDT.lean
+  lean/Crdt/Algorithms/BoolOr.lean
   lean/Crdt/Algorithms/GCounter.lean
+  lean/Crdt/Algorithms/GSet.lean
+  lean/Crdt/Algorithms/MaxRegister.lean
+  lean/Crdt/Algorithms/PNCounter.lean
+  lean/Crdt/Algorithms/TwoPhaseSet.lean
   tla/modules/StateBasedCommon.tla
   tla/algorithms/gcounter/GCounter.tla
   tla/algorithms/gcounter/GCounter_MC.cfg
 
 catalog/
+  bool-or/
   gcounter/
   gset/
   lww-element-set/
+  max-register/
   orset/
+  pncounter/
   two-phase-set/
 
 docs/book/

@@ -20,8 +20,9 @@ honest.
 11. Add TLC or Apalache configs with explicit bounds.
 12. Add a Lean model or document why it is deferred.
 13. Run `cargo run -p catalog-gen -- --check`.
-14. Run `cargo run -p catalog-gen` and `mdbook build docs/book`.
-15. Update the repository-level documentation when the new algorithm changes a
+14. Run `cargo test -p catalog-gen`.
+15. Run `cargo run -p catalog-gen` and `mdbook build docs/book`.
+16. Update the repository-level documentation when the new algorithm changes a
     family, shared abstraction, or phase status.
 
 ## Metadata Template
@@ -55,7 +56,10 @@ api_docs_path = "rustdoc/crdt_algorithms/counters/gcounter/struct.GCounter.html"
 status = "partial"
 file = "../../proofs/lean/Crdt/Algorithms/GCounter.lean"
 theorems = [
+  "Crdt.GCounter.incrementBy_inflationary",
   "Crdt.GCounter.increment_inflationary",
+  "Crdt.GCounter.merge_monotone",
+  "Crdt.GCounter.merge_converges_for_same_states",
 ]
 
 [proofs.tla]
@@ -81,9 +85,13 @@ laws = [
   "join is associative",
   "join is commutative",
   "join is idempotent",
-  "update is inflationary",
+  "increment is inflationary",
+  "merge is monotone",
 ]
 ```
+
+If an algorithm has no Lean or TLA+ artifact yet, keep an empty `[proofs]`
+table in `algorithm.toml` and describe the gap in `proofs.md`.
 
 ## Catalog Documentation Template
 

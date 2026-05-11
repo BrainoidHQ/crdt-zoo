@@ -157,12 +157,15 @@ test, and model causality-heavy set and map CRDTs.
 
 ## Cross-Cutting Milestones
 
-These milestones apply across phases:
+These milestones apply across phases. Already in place:
 
 - CI for Rust formatting, clippy, tests, docs, Lean, selected TLAPS proofs, and
   selected TLC configs
 - generated catalog index from `algorithm.toml`
 - consistent proof-status badges
+
+Still planned or partial:
+
 - reproducible trace replay from TLA+ counterexamples
 - optional fuzzing for serialization and delivery order
 - scheduled benchmarks for selected algorithms

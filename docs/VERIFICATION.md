@@ -34,10 +34,12 @@ update is inflationary
 merge is monotone
 ```
 
-In Rust, these become reusable law checks in `crdt-testkit`. The long-term goal
-is to keep those checks property-based for every algorithm that has an input
-generator. The reusable generators now cover actor ids, component maps,
-actor-like sets, dots, and dot sets.
+In Rust, these become reusable checks in `crdt-testkit`. The current testkit
+includes example-style assertions plus proptest-compatible checks for join laws
+and inflationary updates. The reusable generators cover actor ids, component
+maps, actor-like sets, dots, and dot sets. Every implemented algorithm has
+property tests for the join-semilattice laws; implemented local updates also
+have example or property checks for inflationary behavior.
 
 In Lean, the target is a general theorem: if replica states are joins of the
 updates they have observed, then replicas with the same observed updates
@@ -84,9 +86,9 @@ of leaving them implicit.
 
 ## Reference Models
 
-Each non-trivial CRDT should eventually have a reference model. The reference
-model can be slower or less memory efficient than the production implementation.
-Its job is to be simple enough to inspect.
+Each non-trivial CRDT should have a reference model or an explicit proof gap.
+The reference model can be slower or less memory efficient than the production
+implementation. Its job is to be simple enough to inspect.
 
 The test pattern is:
 
@@ -97,6 +99,8 @@ apply it to the reference model
 compare query results and important invariants
 ```
 
+The current testkit exposes `ReferenceModel` and `assert_query_matches`.
+G-Counter and PN-Counter already use that pattern in their Rust tests.
 Reference models are especially useful for OR-Set, maps, and sequence CRDTs
 where the optimized representation can obscure the intended semantics.
 
@@ -136,7 +140,7 @@ clear specification.
 
 ## CI Targets
 
-The intended CI matrix is:
+The current CI matrix is:
 
 ```text
 Rust:
@@ -150,11 +154,24 @@ Lean:
   lake build
 
 TLA+:
-  run TLAPS for selected mechanized TLA+ proofs
-  run TLC for selected small configs
-  run Apalache for selected bounded checks once added
+  parse shared modules with tlasany
+  run TLAPS for the selected G-Counter proof
+  run TLC for the selected G-Counter config
+
+Catalog:
+  cargo run -p catalog-gen -- --check
+  cargo test -p catalog-gen
+  cargo run -p catalog-gen
+  mdbook build docs/book
+
+Pages:
+  cargo run -p catalog-gen
+  mdbook build docs/book
+  cargo doc --workspace --no-deps
+  copy rustdoc into the mdBook output
 
 Optional:
+  run Apalache for selected bounded checks once added
   cargo +nightly miri test
   cargo fuzz smoke test
   scheduled benchmarks

@@ -11,7 +11,7 @@ contexts are the common ways this repository records that distinction.
 | --- | --- | --- |
 | 2P-Set | Removed elements in a grow-only remove set | Remove-wins permanently |
 | LWW-Element-Set | Greatest remove timestamp per element | Timestamp-based, remove-wins ties |
-| OR-Set | Observed dots retained in causal context | Add-wins for concurrent add/remove |
+| OR-Set | Causal context with a compact version vector plus non-contiguous dots | Add-wins for concurrent add/remove |
 
 ## Why Adds Cannot Simply Be Removed
 
@@ -69,10 +69,11 @@ LWW-Element-Set remove timestamps are compact but depend on the timestamp
 policy. Collection must preserve enough timestamp information to reject older
 adds that may still arrive.
 
-OR-Set can compact contiguous dots into a version vector, but removed dots still
-matter until all live replicas have advanced beyond them. Future delta-state
-implementations will need stricter lower-bound tracking because partial deltas
-can arrive out of order.
+OR-Set stores visible add dots per element and records all observed dots in its
+causal context. Contiguous observations are compacted into a version vector, but
+removed dots still matter until all live replicas have advanced beyond them.
+Future delta-state implementations will need stricter lower-bound tracking
+because partial deltas can arrive out of order.
 
 ## Current Repository Status
 
