@@ -28,6 +28,9 @@ cd proofs/lean
 lake build
 
 cd ../tla
+cd algorithms/gcounter
+tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
+cd ../..
 tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 ```
 
@@ -103,7 +106,7 @@ Before committing, run the checks that match your change:
 - Rust-only change: `cargo fmt --all --check`, `cargo clippy ...`, and
   `cargo test --workspace`
 - Lean change: `lake build` in `proofs/lean`
-- TLA+ change: TLC for the affected configs
+- TLA+ change: TLAPS for affected proofs and TLC for affected configs
 - Catalog change: `cargo run -p catalog-gen -- --check`, regenerate the book
   source, build mdBook, and make sure proof status is honest
 

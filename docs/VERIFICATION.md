@@ -148,6 +148,7 @@ Lean:
   lake build
 
 TLA+:
+  run TLAPS for selected mechanized TLA+ proofs
   run TLC for selected small configs
   run Apalache for selected bounded checks once added
 

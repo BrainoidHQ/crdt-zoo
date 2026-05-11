@@ -138,6 +138,13 @@ cd proofs/tla
 tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 ```
 
+Run the current TLAPS proof:
+
+```sh
+cd proofs/tla/algorithms/gcounter
+tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla
+```
+
 ## Design Principles
 
 - Keep specifications, implementations, tests, proofs, and documentation close

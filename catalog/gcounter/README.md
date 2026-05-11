@@ -43,4 +43,5 @@ counting observed events where decrements are not part of the data type.
 - Components are `u64`; overflow is reported by the Rust API.
 - Serialization support is not enabled yet.
 - Property-based generators currently cover small actor maps.
-- The TLA+ model currently checks a very small bound.
+- TLA+ has a TLAPS proof for join laws, while distributed execution is still
+  checked with a small finite TLC bound.

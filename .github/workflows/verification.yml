@@ -49,6 +49,11 @@ jobs:
       - name: Parse shared TLA+ modules
         run: nix develop --command tlasany proofs/tla/modules/StateBasedCommon.tla
 
+      - name: Run TLAPS proofs
+        run: |
+          nix develop --command bash -lc \
+            'cd proofs/tla/algorithms/gcounter && tlapm --cleanfp --nofp --solver z3 --threads 1 GCounter.tla'
+
       - name: Run TLC models
         run: |
           nix develop --command bash -lc \

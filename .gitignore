@@ -1,4 +1,5 @@
 /target/
+*.tlaps/
 /result
 /.direnv/
 /docs/book/book/
