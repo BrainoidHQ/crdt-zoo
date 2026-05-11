@@ -3,6 +3,7 @@
 use std::fmt::Debug;
 
 use crdt_core::JoinSemilattice;
+use proptest::prelude::*;
 
 /// Checks the associativity, commutativity, and idempotence laws for `join`.
 pub fn check_join_semilattice_laws<T>(a: &T, b: &T, c: &T)
@@ -27,6 +28,33 @@ where
         before.leq(after),
         "updates must be inflationary: before={before:?}, after={after:?}",
     );
+}
+
+/// Property-test compatible form of [`check_join_semilattice_laws`].
+pub fn prop_join_semilattice_laws<T>(a: T, b: T, c: T) -> Result<(), TestCaseError>
+where
+    T: JoinSemilattice + Debug,
+{
+    prop_assert_eq!(
+        a.join(&b).join(&c),
+        a.join(&b.join(&c)),
+        "join must be associative",
+    );
+    prop_assert_eq!(a.join(&b), b.join(&a), "join must be commutative");
+    prop_assert_eq!(a.join(&a), a, "join must be idempotent");
+    Ok(())
+}
+
+/// Property-test compatible form of [`assert_inflationary`].
+pub fn prop_inflationary<T>(before: &T, after: &T) -> Result<(), TestCaseError>
+where
+    T: JoinSemilattice + Debug,
+{
+    prop_assert!(
+        before.leq(after),
+        "updates must be inflationary: before={before:?}, after={after:?}",
+    );
+    Ok(())
 }
 
 /// Checks the associativity, commutativity, and idempotence laws for `join`.

@@ -22,7 +22,10 @@ The Rust API currently exposes:
 - `increment_by(actor, amount)`
 - `component(actor)`
 - `counts()`
+- `len()`
+- `is_empty()`
 - `value()`
+- `checked_value_u64()`
 - `query()`
 - `merge(other)`
 
@@ -50,6 +53,9 @@ query(state) = sum(state[actor] for actor in actors)
 
 Rust returns the sum as `u128` so summing many `u64` actor components does not
 wrap at `u64::MAX`.
+
+`checked_value_u64()` is available when callers need a `u64` result and want to
+detect aggregate overflow.
 
 ## Correctness Intuition
 

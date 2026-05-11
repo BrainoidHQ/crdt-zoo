@@ -34,12 +34,15 @@ merge is monotone
 ```
 
 In Rust, these become reusable law checks in `crdt-testkit`. The long-term goal
-is to make those checks property-based for every algorithm that has an input
-generator.
+is to keep those checks property-based for every algorithm that has an input
+generator. Phase 1 includes small reusable generators for actor ids, component
+maps, and actor-like sets.
 
 In Lean, the target is a general theorem: if replica states are joins of the
 updates they have observed, then replicas with the same observed updates
-converge.
+converge. The current Lean model includes the supporting semilattice order facts
+and a generic convergence theorem for states that are mutually below the same
+observed join.
 
 In TLA+, the target is a bounded model that explores local updates, message
 send, message delivery, reordering, duplication, and eventually selected drop

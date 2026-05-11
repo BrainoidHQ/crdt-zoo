@@ -29,24 +29,26 @@ Exit criteria:
 
 ## Phase 1: Semilattice Basics
 
+Status: implementation complete; proof/model coverage still expanding.
+
 Focus on CRDTs where the algebra is small and visible.
 
 Planned items:
 
-- Bool OR lattice
-- Max register
-- G-Counter hardening
-- PN-Counter
-- G-Set
+- [x] Bool OR lattice
+- [x] Max register
+- [x] G-Counter hardening
+- [x] PN-Counter
+- [x] G-Set
 
 Infrastructure to build:
 
-- property-based law tests
-- reusable arbitrary state generators
-- a reference-model pattern
-- more complete Lean convergence theorem for state-based CRDTs
-- a reusable TLA+ network module
-- CI jobs for Rust, Lean, and TLC
+- [x] property-based law tests
+- [x] reusable arbitrary state generators
+- [x] a reference-model pattern
+- [x] more complete Lean convergence theorem for state-based CRDTs
+- [x] a reusable TLA+ network module
+- [x] CI jobs for Rust, Lean, and TLC
 
 Expected outcome:
 

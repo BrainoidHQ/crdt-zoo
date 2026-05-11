@@ -24,4 +24,22 @@ theorem merge_idem [JoinSemilattice State] (state : State) :
     merge state state = state :=
   JoinSemilattice.join_idem state
 
+theorem converge_when_mutually_observed [JoinSemilattice State] {left right : State} :
+    leq left right -> leq right left -> left = right :=
+  leq_antisymm
+
+theorem converge_with_same_observed_join [JoinSemilattice State]
+    {left right observed : State} :
+    leq left observed ->
+    leq observed left ->
+    leq right observed ->
+    leq observed right ->
+    left = right := by
+  intro leftBelow observedBelowLeft rightBelow observedBelowRight
+  have leftEqObserved : left = observed :=
+    leq_antisymm leftBelow observedBelowLeft
+  have rightEqObserved : right = observed :=
+    leq_antisymm rightBelow observedBelowRight
+  exact leftEqObserved.trans rightEqObserved.symm
+
 end Crdt

@@ -13,4 +13,19 @@ PointwiseMax(left, right) ==
         ELSE
             right[actor]]
 
+StateMessage(ReplicaSet, StateSet) ==
+    [from: ReplicaSet, to: ReplicaSet, payload: StateSet]
+
+NetworkType(ReplicaSet, StateSet) ==
+    SUBSET StateMessage(ReplicaSet, StateSet)
+
+StateMessageRecord(src, dst, state) ==
+    [from |-> src, to |-> dst, payload |-> state]
+
+EnqueueState(network, states, src, dst) ==
+    network \cup {StateMessageRecord(src, dst, states[src])}
+
+DequeueMessage(network, message) ==
+    network \ {message}
+
 ====

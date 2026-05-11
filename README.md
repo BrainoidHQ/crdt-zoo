@@ -13,8 +13,8 @@ for code, proofs, tests, and catalog pages.
 
 ## Repository Status
 
-This is an early skeleton. The first complete exhibit is the Grow-only Counter
-(G-Counter), with:
+Phase 0 is complete, and the catalog now includes the Phase 1 semilattice
+basics. The first complete exhibit is the Grow-only Counter (G-Counter), with:
 
 - a Rust implementation in `crates/crdt-algorithms`
 - shared algebraic traits in `crates/crdt-core`
@@ -23,9 +23,10 @@ This is an early skeleton. The first complete exhibit is the Grow-only Counter
 - a TLA+ model and TLC config in `proofs/tla`
 - catalog metadata and documentation in `catalog/gcounter`
 
-The next milestone is to make G-Counter more exhaustive before adding many new
-algorithms. A strong first exhibit gives later CRDTs a template for API shape,
-proof status, model-checking bounds, examples, and documentation quality.
+The Phase 1 implementations add Bool OR, Max Register, PN-Counter, and G-Set
+alongside property-based law tests, small reusable generators, reference-model
+comparison helpers, a generic Lean convergence theorem, and CI jobs for Rust,
+Lean, and TLC.
 
 ## Workspace Layout
 
@@ -41,7 +42,7 @@ crdt-zoo/
     tla/              distributed execution models and TLC configs
 
   catalog/
-    gcounter/         per-algorithm metadata and source documentation
+    */                per-algorithm metadata and source documentation
 
   docs/
     book/             mdBook configuration, theme, and generated site source
@@ -127,7 +128,11 @@ tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 
 | Algorithm | Family | Rust | Lean | TLA+ |
 | --- | --- | --- | --- | --- |
+| [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Not provided | Not provided |
 | [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLC bounded model check |
+| [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
+| [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Not provided | Not provided |
+| [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Not provided | Not provided |
 
 ## License
 

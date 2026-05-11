@@ -47,9 +47,26 @@ impl<A> GCounter<A> {
         &self.counts
     }
 
+    /// Returns the number of actor components stored by this counter.
+    pub fn len(&self) -> usize {
+        self.counts.len()
+    }
+
+    /// Returns whether this counter has no non-zero actor components.
+    pub fn is_empty(&self) -> bool {
+        self.counts.is_empty()
+    }
+
     /// Returns the sum of all components.
     pub fn value(&self) -> u128 {
         self.counts.values().map(|count| u128::from(*count)).sum()
+    }
+
+    /// Returns the sum of all components when it fits in `u64`.
+    pub fn checked_value_u64(&self) -> Option<u64> {
+        self.counts
+            .values()
+            .try_fold(0_u64, |total, count| total.checked_add(*count))
     }
 }
 
@@ -144,6 +161,26 @@ mod tests {
         GCounter::from_counts(counts)
     }
 
+    struct ReferenceGCounter {
+        counts: BTreeMap<String, u64>,
+    }
+
+    impl ReferenceGCounter {
+        fn from_counter(counter: &GCounter<String>) -> Self {
+            Self {
+                counts: counter.counts().clone(),
+            }
+        }
+    }
+
+    impl crdt_testkit::ReferenceModel for ReferenceGCounter {
+        type Query = u128;
+
+        fn query(&self) -> Self::Query {
+            self.counts.values().map(|count| u128::from(*count)).sum()
+        }
+    }
+
     #[test]
     fn empty_counter_queries_zero() {
         let counter = GCounter::<String>::new();
@@ -162,6 +199,23 @@ mod tests {
 
         assert_eq!(counter.component(&actor), 3);
         assert_eq!(counter.query(), 3);
+    }
+
+    #[test]
+    fn from_counts_drops_zero_components() {
+        let counter = counter(&[("a", 0), ("b", 2)]);
+
+        assert_eq!(counter.len(), 1);
+        assert!(!counter.counts().contains_key("a"));
+        assert_eq!(counter.checked_value_u64(), Some(2));
+    }
+
+    #[test]
+    fn increment_reports_component_overflow() {
+        let actor = "a".to_owned();
+        let mut counter = counter(&[("a", u64::MAX)]);
+
+        assert_eq!(counter.increment(actor), Err(super::CounterOverflow));
     }
 
     #[test]
@@ -198,6 +252,14 @@ mod tests {
     }
 
     #[test]
+    fn reference_model_agrees_on_query() {
+        let counter = counter(&[("a", 1), ("b", 4)]);
+        let reference = ReferenceGCounter::from_counter(&counter);
+
+        crdt_testkit::assert_query_matches(&counter, &reference);
+    }
+
+    #[test]
     fn replicas_converge_after_state_exchange() {
         let mut left = GCounter::new();
         let mut right = GCounter::new();
@@ -213,5 +275,34 @@ mod tests {
 
         assert_eq!(left, right);
         assert_eq!(left.query(), 3);
+    }
+
+    proptest::proptest! {
+        #[test]
+        fn generated_join_semilattice_laws_hold(
+            a in crdt_testkit::small_actor_counts(6, 4),
+            b in crdt_testkit::small_actor_counts(6, 4),
+            c in crdt_testkit::small_actor_counts(6, 4),
+        ) {
+            crdt_testkit::prop_join_semilattice_laws(
+                GCounter::from_counts(a),
+                GCounter::from_counts(b),
+                GCounter::from_counts(c),
+            )?;
+        }
+
+        #[test]
+        fn generated_increment_is_inflationary(
+            counts in crdt_testkit::small_actor_counts(6, 4),
+            actor in crdt_testkit::small_actor_id(),
+            amount in 0u64..=6,
+        ) {
+            let before = GCounter::from_counts(counts);
+            let mut after = before.clone();
+
+            after.increment_by(actor, amount).unwrap();
+
+            crdt_testkit::prop_inflationary(&before, &after)?;
+        }
     }
 }

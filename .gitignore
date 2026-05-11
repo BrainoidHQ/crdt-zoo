@@ -6,3 +6,5 @@
 /docs/book/src/algorithms/
 /docs/book/src/indexes/
 /docs/book/src/assets/catalog.json
+/proofs/lean/.lake/
+/proofs/lean/lake-manifest.json

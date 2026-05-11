@@ -5,7 +5,8 @@
 | Artifact | Location | Status |
 | --- | --- | --- |
 | Rust implementation | `crates/crdt-algorithms/src/counters/gcounter.rs` | Implemented |
-| Law tests | `crates/crdt-testkit/src/law_tests.rs` | Example-based checks |
+| Law tests | `crates/crdt-testkit/src/law_tests.rs` | Example-based and property-based checks |
+| Reference model | `crates/crdt-algorithms/src/counters/gcounter.rs` tests | Query agreement check |
 | Lean model | `proofs/lean/Crdt/Algorithms/GCounter.lean` | Partial proof |
 | TLA+ model | `proofs/tla/algorithms/gcounter/GCounter.tla` | TLC model check with bounded configuration |
 | Catalog metadata | `catalog/gcounter/algorithm.toml` | Present |
@@ -20,6 +21,9 @@ Current checked theorem names:
 The Lean file currently covers core inflationary-update and convergence facts
 for the simplified mathematical model. It is not yet a full mechanized proof of
 every Rust API edge case.
+
+The shared Lean `CvRDT` model also includes a generic theorem for replicas that
+are mutually below the same observed join.
 
 ## TLA+
 
@@ -36,7 +40,6 @@ They are not an unbounded proof of G-Counter correctness.
 
 ## Gaps
 
-- Add property-based law tests.
-- Add a reference model and implementation-vs-model comparison tests.
+- Broaden property generators beyond small actor maps.
 - Strengthen the Lean convergence theorem around observed update sets.
 - Add richer TLA+ invariants beyond `TypeOK`.

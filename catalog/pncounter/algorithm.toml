@@ -1,0 +1,46 @@
+id = "pncounter"
+slug = "pncounter"
+name = "PN-Counter"
+long_name = "Positive-negative Counter"
+family = "counter"
+difficulty = "beginner"
+summary = "A state-based counter that supports increments and decrements by pairing two G-Counters."
+kind = ["state-based", "CvRDT"]
+tags = ["counter", "join-semilattice", "beginner", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
+
+[rust]
+crate = "crdt-algorithms"
+module = "counters::pncounter"
+type = "PNCounter"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/counters/pncounter.rs"
+api_docs_path = "rustdoc/crdt_algorithms/counters/pncounter/struct.PNCounter.html"
+
+[proofs]
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = true
+
+[properties]
+laws = [
+  "join is associative",
+  "join is commutative",
+  "join is idempotent",
+  "increment is inflationary",
+  "decrement is inflationary",
+]

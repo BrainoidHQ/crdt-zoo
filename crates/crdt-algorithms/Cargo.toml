@@ -13,3 +13,4 @@ crdt-core = { path = "../crdt-core" }
 
 [dev-dependencies]
 crdt-testkit = { path = "../crdt-testkit" }
+proptest = "=1.8.0"

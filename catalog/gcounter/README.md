@@ -42,5 +42,5 @@ counting observed events where decrements are not part of the data type.
 - Decrement is not supported. Use PN-Counter when decrement support is needed.
 - Components are `u64`; overflow is reported by the Rust API.
 - Serialization support is not enabled yet.
-- There is not yet a property-based generator for arbitrary counters.
+- Property-based generators currently cover small actor maps.
 - The TLA+ model currently checks a very small bound.

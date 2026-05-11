@@ -1,0 +1,45 @@
+id = "bool-or"
+slug = "bool-or"
+name = "Bool OR"
+long_name = "Boolean OR Lattice"
+family = "lattice"
+difficulty = "beginner"
+summary = "A state-based boolean flag whose merge is logical OR."
+kind = ["state-based", "CvRDT"]
+tags = ["boolean", "join-semilattice", "beginner", "state-based"]
+
+[docs]
+readme = "README.md"
+spec = "spec.md"
+examples = "examples.md"
+proofs = "proofs.md"
+
+[rust]
+crate = "crdt-algorithms"
+module = "lattices::bool_or"
+type = "BoolOr"
+status = "implemented"
+source = "../../crates/crdt-algorithms/src/lattices/bool_or.rs"
+api_docs_path = "rustdoc/crdt_algorithms/lattices/bool_or/struct.BoolOr.html"
+
+[proofs]
+
+[delivery]
+causal_required = false
+duplicate_tolerant = true
+drop_tolerant = true
+exactly_once_required = false
+
+[features]
+serde = false
+no_std = false
+delta = false
+tombstone_free = true
+
+[properties]
+laws = [
+  "join is associative",
+  "join is commutative",
+  "join is idempotent",
+  "enable is inflationary",
+]

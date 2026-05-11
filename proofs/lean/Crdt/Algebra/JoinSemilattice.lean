@@ -13,6 +13,28 @@ theorem leq_refl [JoinSemilattice α] (a : α) : leq a a := by
   unfold leq
   exact JoinSemilattice.join_idem a
 
+theorem leq_trans [JoinSemilattice α] {a b c : α} :
+    leq a b -> leq b c -> leq a c := by
+  intro hab hbc
+  unfold leq at *
+  calc
+    JoinSemilattice.join a c = JoinSemilattice.join a (JoinSemilattice.join b c) := by
+      rw [hbc]
+    _ = JoinSemilattice.join (JoinSemilattice.join a b) c := by
+      rw [JoinSemilattice.join_assoc]
+    _ = JoinSemilattice.join b c := by
+      rw [hab]
+    _ = c := hbc
+
+theorem leq_antisymm [JoinSemilattice α] {a b : α} :
+    leq a b -> leq b a -> a = b := by
+  intro hab hba
+  unfold leq at *
+  calc
+    a = JoinSemilattice.join b a := hba.symm
+    _ = JoinSemilattice.join a b := JoinSemilattice.join_comm b a
+    _ = b := hab
+
 theorem leq_join_left [JoinSemilattice α] (a b : α) :
     leq a (JoinSemilattice.join a b) := by
   unfold leq

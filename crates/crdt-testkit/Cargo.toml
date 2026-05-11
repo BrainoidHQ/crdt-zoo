@@ -10,3 +10,4 @@ workspace = true
 
 [dependencies]
 crdt-core = { path = "../crdt-core" }
+proptest = "=1.8.0"
