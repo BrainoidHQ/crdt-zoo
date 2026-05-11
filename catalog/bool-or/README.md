@@ -15,7 +15,7 @@ single boolean value. Local updates can only move the flag from `false` to
 | Deletes | Not supported |
 | Tombstones | None |
 | Rust status | Implemented |
-| Lean status | Not provided yet |
+| Lean status | Proved |
 | TLA+ status | Not provided yet |
 
 ## What It Solves
@@ -37,4 +37,4 @@ will observe `true`.
 ## Known Constraints
 
 - The flag cannot be reset to `false`.
-- No algorithm-specific Lean or TLA+ model has been added yet.
+- No algorithm-specific TLA+ model has been added yet.

@@ -15,7 +15,7 @@ set and not in the remove set.
 | Deletes | Permanent tombstone |
 | Tombstones | One element tombstone per removed value |
 | Rust status | Implemented |
-| Lean status | Not provided yet |
+| Lean status | Partial proof |
 | TLA+ status | Not provided yet |
 
 ## What It Solves

@@ -22,7 +22,13 @@ status = "implemented"
 source = "../../crates/crdt-algorithms/src/lattices/bool_or.rs"
 api_docs_path = "rustdoc/crdt_algorithms/lattices/bool_or/struct.BoolOr.html"
 
-[proofs]
+[proofs.lean]
+status = "proved"
+file = "../../proofs/lean/Crdt/Algorithms/BoolOr.lean"
+theorems = [
+  "Crdt.BoolOr.enable_inflationary",
+  "Crdt.BoolOr.merge_converges_for_same_states",
+]
 
 [delivery]
 causal_required = false

@@ -16,11 +16,14 @@
 Current checked theorem names:
 
 - `Crdt.GCounter.increment_inflationary`
+- `Crdt.GCounter.incrementBy_inflationary`
+- `Crdt.GCounter.merge_monotone`
 - `Crdt.GCounter.merge_converges_for_same_states`
 
-The Lean file currently covers core inflationary-update and convergence facts
-for the simplified mathematical model. It is not yet a full mechanized proof of
-every Rust API edge case.
+The Lean file covers core inflationary-update, monotone merge, and convergence
+facts for the simplified mathematical model. The update model now matches the
+`increment_by` shape by increasing the actor component by an arbitrary natural
+amount. It is not yet a full mechanized proof of every Rust API edge case.
 
 The shared Lean `CvRDT` model also includes a generic theorem for replicas that
 are mutually below the same observed join.

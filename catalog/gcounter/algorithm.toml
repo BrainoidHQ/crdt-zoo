@@ -26,7 +26,9 @@ api_docs_path = "rustdoc/crdt_algorithms/counters/gcounter/struct.GCounter.html"
 status = "partial"
 file = "../../proofs/lean/Crdt/Algorithms/GCounter.lean"
 theorems = [
+  "Crdt.GCounter.incrementBy_inflationary",
   "Crdt.GCounter.increment_inflationary",
+  "Crdt.GCounter.merge_monotone",
   "Crdt.GCounter.merge_converges_for_same_states",
 ]
 

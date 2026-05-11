@@ -22,7 +22,16 @@ status = "implemented"
 source = "../../crates/crdt-algorithms/src/sets/two_phase.rs"
 api_docs_path = "rustdoc/crdt_algorithms/sets/two_phase/struct.TwoPhaseSet.html"
 
-[proofs]
+[proofs.lean]
+status = "partial"
+file = "../../proofs/lean/Crdt/Algorithms/TwoPhaseSet.lean"
+theorems = [
+  "Crdt.TwoPhaseSet.add_inflationary",
+  "Crdt.TwoPhaseSet.remove_inflationary",
+  "Crdt.TwoPhaseSet.remove_wins",
+  "Crdt.TwoPhaseSet.add_after_remove_noop",
+  "Crdt.TwoPhaseSet.merge_converges_for_same_states",
+]
 
 [delivery]
 causal_required = false

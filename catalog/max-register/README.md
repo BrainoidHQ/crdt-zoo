@@ -15,7 +15,7 @@ by either replica.
 | Deletes | Not supported |
 | Tombstones | None |
 | Rust status | Implemented |
-| Lean status | Not provided yet |
+| Lean status | Partial proof |
 | TLA+ status | Not provided yet |
 
 ## What It Solves

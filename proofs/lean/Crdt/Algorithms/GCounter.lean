@@ -29,13 +29,36 @@ def zero : State Actor :=
 def singleton [DecidableEq Actor] (actor : Actor) (amount : Nat) : State Actor :=
   fun current => if current = actor then amount else 0
 
+def incrementBy [DecidableEq Actor] (actor : Actor) (amount : Nat)
+    (state : State Actor) : State Actor :=
+  fun current => if current = actor then state current + amount else state current
+
 def increment [DecidableEq Actor] (actor : Actor) (state : State Actor) : State Actor :=
-  JoinSemilattice.join state (singleton actor 1)
+  incrementBy actor 1 state
+
+theorem incrementBy_inflationary [DecidableEq Actor] (actor : Actor)
+    (amount : Nat) (state : State Actor) :
+    leq state (incrementBy actor amount state) := by
+  unfold leq
+  change join state (incrementBy actor amount state) = incrementBy actor amount state
+  unfold incrementBy
+  funext current
+  by_cases h : current = actor
+  · simp [join, h]
+  · simp [join, h]
 
 theorem increment_inflationary [DecidableEq Actor] (actor : Actor) (state : State Actor) :
     leq state (increment actor state) := by
   unfold increment
-  exact leq_join_left state (singleton actor 1)
+  exact incrementBy_inflationary actor 1 state
+
+theorem merge_monotone {leftBefore leftAfter rightBefore rightAfter : State Actor} :
+    leq leftBefore leftAfter ->
+    leq rightBefore rightAfter ->
+    leq
+      (JoinSemilattice.join leftBefore rightBefore)
+      (JoinSemilattice.join leftAfter rightAfter) := by
+  exact join_monotone
 
 theorem merge_converges_for_same_states (left right : State Actor) :
     JoinSemilattice.join left right = JoinSemilattice.join right left :=

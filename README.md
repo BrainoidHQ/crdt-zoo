@@ -26,13 +26,14 @@ complete exhibit is the Grow-only Counter (G-Counter), with:
 
 The Phase 1 implementations add Bool OR, Max Register, PN-Counter, and G-Set
 alongside property-based law tests, small reusable generators, reference-model
-comparison helpers, a generic Lean convergence theorem, and CI jobs for Rust,
-Lean, and TLC.
+comparison helpers, Lean models for the core algebraic laws, and CI jobs for
+Rust, Lean, and TLC.
 
 The Phase 2 implementations add 2P-Set, LWW-Element-Set, and OR-Set, plus shared
 actor ids, replica ids, dots, dot sets, version vectors, causal contexts, and
-tombstone/garbage-collection documentation. Formal Lean and TLA+ models for
-these delete-aware sets are still deferred and called out in the catalog pages.
+tombstone/garbage-collection documentation. The 2P-Set has a Lean predicate-set
+model for its core laws; Lean/TLA+ models for the more advanced delete-aware
+sets are still deferred and called out in the catalog pages.
 
 ## Implemented Semantics
 
@@ -153,14 +154,14 @@ tlc -config algorithms/gcounter/GCounter_MC.cfg algorithms/gcounter/GCounter.tla
 
 | Algorithm | Family | Rust | Lean | TLA+ |
 | --- | --- | --- | --- | --- |
-| [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Not provided | Not provided |
+| [Bool OR](catalog/bool-or/README.md) | Lattice, CvRDT | Implemented | Proved | Not provided |
 | [G-Counter](catalog/gcounter/README.md) | Counter, CvRDT | Implemented | Partial proof | TLC bounded model check |
-| [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
+| [G-Set](catalog/gset/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
 | [LWW-Element-Set](catalog/lww-element-set/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
-| [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Not provided | Not provided |
+| [Max Register](catalog/max-register/README.md) | Register, CvRDT | Implemented | Partial proof | Not provided |
 | [OR-Set](catalog/orset/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
-| [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Not provided | Not provided |
-| [2P-Set](catalog/two-phase-set/README.md) | Set, CvRDT | Implemented | Not provided | Not provided |
+| [PN-Counter](catalog/pncounter/README.md) | Counter, CvRDT | Implemented | Partial proof | Not provided |
+| [2P-Set](catalog/two-phase-set/README.md) | Set, CvRDT | Implemented | Partial proof | Not provided |
 
 ## License
 

@@ -46,4 +46,24 @@ theorem leq_join_right [JoinSemilattice α] (a b : α) :
   rw [JoinSemilattice.join_comm a b]
   exact leq_join_left b a
 
+theorem join_leq [JoinSemilattice α] {a b c : α} :
+    leq a c -> leq b c -> leq (JoinSemilattice.join a b) c := by
+  intro hac hbc
+  unfold leq at *
+  calc
+    JoinSemilattice.join (JoinSemilattice.join a b) c
+        = JoinSemilattice.join a (JoinSemilattice.join b c) := by
+      rw [JoinSemilattice.join_assoc]
+    _ = JoinSemilattice.join a c := by
+      rw [hbc]
+    _ = c := hac
+
+theorem join_monotone [JoinSemilattice α] {a b c d : α} :
+    leq a b -> leq c d ->
+    leq (JoinSemilattice.join a c) (JoinSemilattice.join b d) := by
+  intro hab hcd
+  apply join_leq
+  · exact leq_trans hab (leq_join_left b d)
+  · exact leq_trans hcd (leq_join_right b d)
+
 end Crdt

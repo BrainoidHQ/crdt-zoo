@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | Rust implementation | `crates/crdt-algorithms/src/sets/gset.rs` | Implemented |
 | Law tests | `crates/crdt-testkit/src/law_tests.rs` | Property-based checks |
-| Lean model | Not added yet | Planned |
+| Lean model | `proofs/lean/Crdt/Algorithms/GSet.lean` | Partial proof |
 | TLA+ model | Not added yet | Planned |
 | Catalog metadata | `catalog/gset/algorithm.toml` | Present |
 
@@ -16,7 +16,18 @@ Property tests generate bounded actor-like string sets and check the
 join-semilattice laws. Unit tests check that `add` is inflationary and merge
 returns the union.
 
+## Lean
+
+Checked theorem names:
+
+- `Crdt.GSet.add_inflationary`
+- `Crdt.GSet.contains_added`
+- `Crdt.GSet.merge_converges_for_same_states`
+
+The Lean model represents sets as boolean membership predicates and proves
+union join laws plus monotonic add behavior.
+
 ## Gaps
 
-- Add a Lean model for finite sets.
+- Connect the predicate-set Lean model to finite-set extraction/query details.
 - Add a bounded TLA+ model when common network-model wiring is available.

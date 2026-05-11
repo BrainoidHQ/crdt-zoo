@@ -22,7 +22,16 @@ status = "implemented"
 source = "../../crates/crdt-algorithms/src/counters/pncounter.rs"
 api_docs_path = "rustdoc/crdt_algorithms/counters/pncounter/struct.PNCounter.html"
 
-[proofs]
+[proofs.lean]
+status = "partial"
+file = "../../proofs/lean/Crdt/Algorithms/PNCounter.lean"
+theorems = [
+  "Crdt.PNCounter.incrementBy_inflationary",
+  "Crdt.PNCounter.decrementBy_inflationary",
+  "Crdt.PNCounter.increment_inflationary",
+  "Crdt.PNCounter.decrement_inflationary",
+  "Crdt.PNCounter.merge_converges_for_same_states",
+]
 
 [delivery]
 causal_required = false

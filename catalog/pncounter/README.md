@@ -15,7 +15,7 @@ one for negative components.
 | Deletes | Not supported |
 | Tombstones | None |
 | Rust status | Implemented |
-| Lean status | Not provided yet |
+| Lean status | Partial proof |
 | TLA+ status | Not provided yet |
 
 ## What It Solves
@@ -39,4 +39,6 @@ the negative total.
 - Components are `u64`; overflow is reported by the Rust API.
 - Query returns split totals. Use `checked_value()` for a signed `i128` when it
   fits.
-- No algorithm-specific Lean or TLA+ model has been added yet.
+- The Lean model covers component growth and merge laws; query summation and
+  signed overflow boundaries are not mechanized yet.
+- No algorithm-specific TLA+ model has been added yet.

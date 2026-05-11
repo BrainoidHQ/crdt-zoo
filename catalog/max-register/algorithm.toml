@@ -22,7 +22,13 @@ status = "implemented"
 source = "../../crates/crdt-algorithms/src/registers/max.rs"
 api_docs_path = "rustdoc/crdt_algorithms/registers/max/struct.MaxRegister.html"
 
-[proofs]
+[proofs.lean]
+status = "partial"
+file = "../../proofs/lean/Crdt/Algorithms/MaxRegister.lean"
+theorems = [
+  "Crdt.MaxRegister.assign_inflationary",
+  "Crdt.MaxRegister.merge_converges_for_same_states",
+]
 
 [delivery]
 causal_required = false
